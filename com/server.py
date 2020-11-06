@@ -15,6 +15,7 @@ def start():
     serverSocket.listen(1)
     while True:
         conn, addr = serverSocket.accept()
+        thread = threading.Thread(target=handle_client)
 
 print("[STARTING] Server is starting...")
 start()

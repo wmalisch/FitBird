@@ -9,10 +9,11 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <stdio.h>
+#include "./SensorReceiver.h"
 
 using namespace std;
 
-#define SERVER_PORT htons(50007)
+#define SERVER_PORT htons(5050)
 
 int main() {
 
@@ -39,6 +40,8 @@ int main() {
         socklen_t sin_size=sizeof(struct sockaddr_in);
 
         int clientSock=accept(serverSock,(struct sockaddr*)&clientAddr, &sin_size);
+        cout << "[STARTING SERVER]";
+        
 
         while (1 == 1) {
                 bzero(buffer, 1000);        
