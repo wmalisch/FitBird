@@ -9,4 +9,5 @@ while True:
     x=round(x,1)
     y=round(y,1)
     z=round(z,1)
-    print("x={0}, y={1}, z={2}".format(x,y,z))
+    #print("x={0}, y={1}, z={2}".format(x,y,z))
+    print(x,y,z)

@@ -5,6 +5,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <string>
+#include <strings.h>
 #include <arpa/inet.h>
 #include <string.h>
 #include <stdio.h>
@@ -34,12 +35,13 @@ int main() {
         /* listen (this socket, request queue length) */
         listen(serverSock,1);
 
-        while (1 == 1) {
-                bzero(buffer, 1000);
+        sockaddr_in clientAddr;
+        socklen_t sin_size=sizeof(struct sockaddr_in);
 
-                sockaddr_in clientAddr;
-                socklen_t sin_size=sizeof(struct sockaddr_in);
-                int clientSock=accept(serverSock,(struct sockaddr*)&clientAddr, &sin_size);
+        int clientSock=accept(serverSock,(struct sockaddr*)&clientAddr, &sin_size);
+
+        while (1 == 1) {
+                bzero(buffer, 1000);        
 
                 //receive a message from a client
                 n = read(clientSock, buffer, 500);
