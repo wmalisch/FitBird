@@ -21,26 +21,27 @@ using namespace std;
  */
 int main(int argc, char *argv[]){
 	//Print out a menu
-	cout << "********************************************************************************************************************************" << endl;
+	cout << "*******************************************************************************************************************************" << endl;
 	cout << "Types of activities allowed: Walk" << endl;
 	cout << "Command usages:" << endl;
 	cout << "  addUser username password age weight(kg) height(cm) sex(M/F)" << endl;
 	cout << "  login username password" << endl;
 	cout << "  logout" << endl;
-	cout << "  showPastActivities (once logged in)" << endl;
-	cout << "  addActivity 'name' day(int) month(int) year(int) startHour startMin endHour endMin duration(min) distance type elevationGain (once logged in)" << endl; 
-	cout << "  addActivity 'name' startHour startMin endHour endMin duration(min) distance type elevationGain(once logged in)" << endl; 
+	cout << "  quit" << endl;
+	cout << "Commands upon login:" << endl;
+	cout << "  showPastActivities" << endl;
+	cout << "  addActivity 'name' day(int) month(int) year(int) startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
+	cout << "  addActivity 'name' startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
 	cout << "  showProgress (once logged in)" << endl;
 	cout << "  viewProfile (once logged in)" << endl;
-	cout << "  removeActivity 'name' day month year (once logged in)" << endl;
-	cout << "  setStepGoal step_goal (once logged in)" << endl;
-	cout << "  removeStepGoal (once logged in)" << endl;
-	cout << "  updateWeight weight(kg) (once logged in)" << endl;
-	cout << "  updateHeight height(cm) (once logged in)" << endl;
-	cout << "  updateAge age (once logged in)" << endl;
-	cout << "  quit" << endl;
+	cout << "  removeActivity 'name' day month year" << endl;
+	cout << "  setStepGoal step_goal" << endl;
+	cout << "  removeStepGoal" << endl;
+	cout << "  updateWeight weight(kg)" << endl;
+	cout << "  updateHeight height(cm)" << endl;
+	cout << "  updateAge age" << endl;
 	//Add any needed extra functions
-	cout << "********************************************************************************************************************************" << endl;
+	cout << "*******************************************************************************************************************************" << endl;
 	
 	Facade * instance = Facade::instance();
 	//Load data stored 
