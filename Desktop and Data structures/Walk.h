@@ -13,17 +13,19 @@
 #include <iostream>
 #include <string>
 #include "User.h"
- class Walk : Activity	{
-	 public:
+#include "Activity.h"
+class User;
+class Walk : public Activity	{
+	public:
 		Walk(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain);
 		~Walk();
-		void view() const;
-		int getSteps() const;
-		void setSteps(int steps);
+		void view() const ;
+		int getSteps() const ;
+		void setSteps(int newSteps);
 		
-	 private:
+	private:
 		int steps;
-		static int calculateCaloriesBurnt(User * user, Walk * activity) const;
- }
+		static int calculateCaloriesBurnt(User * user, Walk * activity);
+};
 		
-#endef
+#endif

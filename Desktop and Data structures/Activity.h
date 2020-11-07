@@ -13,21 +13,21 @@
 #include <iostream>
 #include <string>
 #include "User.h"
-
- class Activity {
+class User;
+class Activity {
 	 public:
 		Activity(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, std::string type, double elevationGain);
 		virtual ~Activity();
-		virtual void view() const;
-		std::string getName() const;
-		User *getUser() const;
-		struct tm getDate() const;
-		struct tm getStart() const;
-		struct tm getEnd() const;
-		int getDuration() const;
-		double getDistance() const;
-		std::string getType() const;
-		double getElevationGain() const;
+		virtual void view() const ;
+		std::string getName() const ;
+		User *getUser() const ;
+		struct tm getDate() const ;
+		struct tm getStart() const ;
+		struct tm getEnd() const ;
+		int getDuration() const ;
+		double getDistance() const ;
+		std::string getType() const ;
+		double getElevationGain() const ;
 		void setDate(struct tm date);
 		void setStart(struct tm start);
 		void setEnd(struct tm end);
@@ -36,7 +36,7 @@
 		
 	 protected:
 		std::string name;
-		User *user;
+		User * user;
 		struct tm date;
 		struct tm start;
 		struct tm end;
@@ -45,9 +45,9 @@
 		std::string type;
 		double elevationGain;
 		int caloriesBurnt;
-		static virtual int calculateCaloriesBurnt(User * user, Activity * activity) const;
+		virtual int calculateCaloriesBurnt(User * user, Activity * activity);
 	 
- };
+};
  
- #endef
+ #endif
  

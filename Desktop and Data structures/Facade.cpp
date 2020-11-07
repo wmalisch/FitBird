@@ -9,9 +9,8 @@
  #include "Facade.h"
  
  using namespace std;
- 
-		
- const Facade* Facade::_instance = NULL;
+	
+ Facade* Facade::_instance = NULL;
  
  /*
  * Name        : instance
@@ -19,11 +18,11 @@
  * Parameter(s): N/A
  * Return      : pointer to the instance of the facade
  */
- const Facade& Facade::instance()	{
+Facade * Facade::instance()	{
 	 if(_instance == NULL)	{
 		_instance = new Facade();
 	 }
-	 return *_instance;
+	 return _instance;
  }
  
  /*
@@ -34,8 +33,10 @@
  */
 void Facade::addUser(std::vector<std::string>* arguments)	{
 	// command username password age weight(kg) height(cm) sex(M/F)
+	string message;
 	if(arguments->size() != 7)	{
-		throw "\nIncorrect number of arguments\n";
+		string message = "\nIncorrect number of arguments\n";
+		throw message;
 	}
 	string username = arguments->at(1);
 	string password = arguments->at(2);
@@ -46,41 +47,49 @@ void Facade::addUser(std::vector<std::string>* arguments)	{
 	
 	//Check if the user with username already exists
 	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index))->getName())	{
-			throw "\nUsername taken\n";
+		if(username == (users->at(index)).getName())	{
+			message = "\nUsername taken\n";
+			throw message;
 		}
 	}
 	
-	User newUser = User(username, password, age, weight, height, sex);
-	users->push_back(newUser);
+	User * newUser = new User(username, password, age, weight, height, sex);
+	users->push_back(*newUser);
 }
 
 /*
  * Name        : login
  * Description : Takes arguments and tries to login as the user
  * Parameter(s): arguments: A vector of strings with the arguments to login as a user
- * Return      : The user with the username and password if login succesful, NULL if username or password are incorrect
+ * Return      : The user with the username and password if login succesful, else a string exception
  */
-User *Facade::login(std::vector<std::string>* arguments)	{
+User * Facade::login(std::vector<std::string>* arguments)	{
+	string message;
 	//username password
 	if(arguments->size() != 3)	{
-		throw "\nIncorrect number of arguments\n";
+		message = "\nIncorrect number of arguments\n";
+		throw message;
 		
 	}
+	
 	string username = arguments->at(1);
 	string password = arguments->at(2);
 	
 	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index)).getUsername())	{
+		if(username == (users->at(index)).getName())	{
 			if((users->at(index)).verify(password))	{
 				return &(users->at(index));
 				
 			}else	{
-				throw "\nIncorrect Password!\n";
+				message = "\nIncorrect Password!\n";
+				throw message;
+			}
 		}
-	}
-	throw "\nIncorrect username!\n";
 	
+	
+	}
+	message = "\nIncorrect username!\n";
+	throw message;
 }
 
 /*
@@ -89,13 +98,14 @@ User *Facade::login(std::vector<std::string>* arguments)	{
  * Parameter(s): command: string that has the command line text
  * Return      : Pointer to a vector of strings that are split into seperate arguments
  */
-std::vector<std::string> *Facade::getArguments(string command)	{
+std::vector<std::string> * Facade::getArguments(string command)	{
 	//Constants to tell what state the char running through the line is in
 	const int NON_QUOTED = 0;
 	const int QUOTED = 1;
 	
 	vector<string> * container = new vector<string>;
 	string currentArgument = "";
+	int state = NON_QUOTED;
 	
 	//Loop through every char in line
 	for(char character : command)	{
@@ -107,7 +117,7 @@ std::vector<std::string> *Facade::getArguments(string command)	{
 				//Reset argument to take in the string of the next argument
 				currentArgument.clear();
 				break;
-			}else if(character == ' ')	{
+			}else if(character == ' ')	{ 
 				//End of field, push on the arguments the string
 				if(currentArgument == "")	{
 					//The argument is empty
@@ -117,7 +127,7 @@ std::vector<std::string> *Facade::getArguments(string command)	{
 				//Reset argument to take in the string of the next argument
 				currentArgument.clear();
 
-			}else if(character == ''')	{
+			}else if(character == '\47')	{//47 is '
 				//Is a quoted field change state to QUOTED
 				state = QUOTED;
 
@@ -127,7 +137,7 @@ std::vector<std::string> *Facade::getArguments(string command)	{
 			}
 
 		}else if(state == QUOTED)	{
-			if(character == ''')	{
+			if(character == '\47')	{//47 is '
 				//Quote found end change to NON_QUOTED state
 				state = NON_QUOTED;
 				//End of field, push on the arguments the string
@@ -142,6 +152,7 @@ std::vector<std::string> *Facade::getArguments(string command)	{
 			}
 		}
 	}
+	container->push_back(currentArgument);
 	return container;
 }
 
@@ -152,11 +163,13 @@ std::vector<std::string> *Facade::getArguments(string command)	{
  * Return      : N/A
  */
 void Facade::showPastActivities(User * user)	{
-	if(user == NULL)	{
-		user->showPastActivities();
+	if(user != NULL)	{
+		user->showActivities();
 		
 	}else	{
-		throw "\nNot logged in\n";
+		string message = "\nNot logged in\n";
+		throw message;
+	}
 }
 
 /*
@@ -167,6 +180,7 @@ void Facade::showPastActivities(User * user)	{
  * Return      : N/A
  */
 void Facade::addActivity(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 13)	{
 			//Use given day
@@ -175,16 +189,16 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			int day = stoi(arguments->at(2));
 			int month = stoi(arguments->at(3)) - 1;
 			int year = stoi(arguments->at(4)) - 1900;
-			int startHour = stoi(arguments->at(5)) - 1;
-			int startMin = stoi(arguments->at(6)) - 1;
-			int endHour = stoi(arguments->at(7)) - 1;
-			int endMin = stoi(arguments->at(8)) - 1;
+			int startHour = stoi(arguments->at(5));
+			int startMin = stoi(arguments->at(6));
+			int endHour = stoi(arguments->at(7));
+			int endMin = stoi(arguments->at(8));
 			int duration = stoi(arguments->at(9));
 			double distance = stod(arguments->at(10));
 			string type = arguments->at(11);
 			double elevationGain = stod(arguments->at(12));
 			
-			tm date;
+			tm  date;
 			date.tm_mday = day;
 			date.tm_mon = month;
 			date.tm_year = year;
@@ -197,38 +211,39 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			start.tm_hour = endHour;
 			start.tm_min = endMin;
 			
-			Activity activity;
-			
 			//Get correct type of activity created
 			if(type == "Walk")	{
 				int steps;
 				cout << "Enter steps: ";
 				cin >> steps;
+				//remove the newline
+				cin.get();
+				
 				Walk * walk = new Walk(name, user, date, start, end, duration, distance, steps, type, elevationGain);
 				
-				user->addActivity(*walk);
+				user->addActivity(walk);
 				
 			}else	{
-				throw "\nInvalid type\n";
+				message = "\nInvalid type\n";
+				throw message;
 			}
 			
 			
 		}else if(arguments->size() == 10)	{
 			//get current day
-			name startHour startMin endHour endMin duration(min) distance steps type elevationGain
+			//name startHour startMin endHour endMin duration(min) distance steps type elevationGain
 			string name = arguments->at(1);
-			int startHour = stoi(arguments->at(2)) - 1;
-			int startMin = stoi(arguments->at(3)) - 1;
-			int endHour = stoi(arguments->at(4)) - 1;
-			int endMin = stoi(arguments->at(5)) - 1;
+			int startHour = stoi(arguments->at(2));
+			int startMin = stoi(arguments->at(3));
+			int endHour = stoi(arguments->at(4));
+			int endMin = stoi(arguments->at(5));
 			int duration = stoi(arguments->at(6));
 			double distance = stod(arguments->at(7));
-			int steps = stoi(arguments->at(8));
-			string type = arguments->at(9);
-			double elevationGain = stod(arguments->at(10));
+			string type = arguments->at(8);
+			double elevationGain = stod(arguments->at(9));
 			
 			tm  * date;
-			t_time currTime;
+			time_t currTime;
 			
 			time(&currTime);
 			date = localtime(&currTime);
@@ -241,27 +256,30 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			start.tm_hour = endHour;
 			start.tm_min = endMin;
 			
-			Activity activity;
-			
 			//Get correct type of activity created
 			if(type == "Walk")	{
 				int steps;
 				cout << "Enter steps: ";
 				cin >> steps;
-				Walk * walk = new Walk(name, user, date, start, end, duration, distance, steps, type, elevationGain);
+				//remove the newline
+				cin.get();
+				Walk * walk = new Walk(name, user, *date, start, end, duration, distance, steps, type, elevationGain);
 				
-				user->addActivity(*walk);
+				user->addActivity(walk);
 				
 			}else	{
-				throw "\nInvalid type\n";
+				message = "\nInvalid type\n";
+				throw message;
 			}
 			
 		}else	{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
 		}
 		
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 	
 	
@@ -274,7 +292,7 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::showProgress(User * user)	{
-	user->showProgress();
+	//user->showProgress();
 }
 
 /*
@@ -287,7 +305,8 @@ void Facade::viewProfile(User * user)	{
 	if(user != NULL)	{
 		user->view();
 	}else	{
-		throw "\nNot logged in\n";
+		string message =  "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -299,20 +318,23 @@ void Facade::viewProfile(User * user)	{
  * Return      : N/A
  */
 void Facade::removeActivity(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 5)	{
 			string name = arguments->at(1);
 			int day = stoi(arguments->at(2));
-			int month = stoi(arguments->at(3));
-			int year = stoi(arguments->at(4));
+			int month = stoi(arguments->at(3)) - 1;
+			int year = stoi(arguments->at(4)) - 1900;
 			
 			user->removeActivity(name, day, month, year);
 		}else	{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
 		}
 		
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -324,14 +346,18 @@ void Facade::removeActivity(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::setStepGoal(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
 			int stepGoal = stoi(arguments->at(1));
 			user->setStepGoal(stepGoal);
 		}else{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
+		}
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -343,9 +369,10 @@ void Facade::setStepGoal(User * user, vector<string>* arguments)	{
  */
 void Facade::removeStepGoal(User * user)	{
 	if(user != NULL)	{
-		user->removeStepGoal();
+		user->setStepGoal(0);
 	}else	{
-		throw "\nNot logged in\n";
+		string message = "\nNot logged in\n"; 
+		throw message;
 	}
 	
 }
@@ -358,14 +385,18 @@ void Facade::removeStepGoal(User * user)	{
  * Return      : N/A
  */
 void Facade::updateWeight(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
 			int weight = stoi(arguments->at(1));
 			user->setWeight(weight);
 		}else{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
+		}
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -377,14 +408,18 @@ void Facade::updateWeight(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::updateHeight(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
 			int height = stoi(arguments->at(1));
 			user->setHeight(height);
 		}else{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
+		}
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -396,14 +431,18 @@ void Facade::updateHeight(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::updateAge(User * user, vector<string>* arguments)	{
+	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
 			int age = stoi(arguments->at(1));
 			user->setAge(age);
 		}else{
-			throw "\nIncorrect number of arguments\n";
+			message = "\nIncorrect number of arguments\n";
+			throw message;
+		}
 	}else	{
-		throw "\nNot logged in\n";
+		message = "\nNot logged in\n";
+		throw message;
 	}
 }
 
@@ -414,7 +453,7 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::load()	{
-	
+	//To do Later
 }
 
 /*
@@ -424,7 +463,7 @@ void Facade::load()	{
  * Return      : N/A
  */
 void Facade::save()	{
-	
+	//To do Later
 }
 
 /*
@@ -444,6 +483,6 @@ Facade::~Facade()	{
  * Return      : N/A
  */
 Facade::Facade()	{
-	 users = new vector<string>();
+	 users = new vector<User>();
 }
  

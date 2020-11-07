@@ -25,17 +25,9 @@ using namespace std;
  *				 elevationGain: The elevation gain of the activity
  * Return      : N/A
  */	
-Walk::Walk(string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain)	{
-	this->name = name;
-	this->user = user;
-	this->date = date;
-	this->start = start;
-	this->end = end;
-	this->duration = duration;
-	this->distance = distance;
+Walk::Walk(string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain): Activity(name, user, date, start, end, duration, distance, type, elevationGain)	
+{
 	this->steps = steps;
-	this->type = type;
-	this->elevationGain = elevationGain;
 	
 	this->caloriesBurnt = this->calculateCaloriesBurnt(user, this);
 }
@@ -56,17 +48,19 @@ Walk::~Walk()	{
  * Parameter(s): N/A
  * Return      : N/A
  */
-Walk::view() const	{
+void Walk::view() const	{
 	cout << endl;
 	cout << "Name: " << name << endl;
 	cout << "User: " << user->getName() << endl;
-	char buffer [80];
-	strftime(buffer, 60, "%Y-%m-%d", &date); 
-	cout << "Date: " << buffer << endl;
-	strftime(buffer, 60, "%I:%M%p", &start); 
-	cout << "Start time: " << buffer << endl;
-	strftime(buffer, 60, "%I:%M%p", &end); 
-	cout << "End time: " << buffer << endl;
+	char buffer1 [60];
+	strftime(buffer1, 60, "%d-%m-%Y", &date); 
+	cout << "Date: " << buffer1 << endl;
+	char buffer2 [60];
+	strftime(buffer2, 60, "%I:%M%p", &start); 
+	cout << "Start time: " << buffer2 << endl;
+	char buffer3 [60];
+	strftime(buffer3, 60, "%I:%M%p", &end); 
+	cout << "End time: " << buffer3 << endl;
 	cout << "Duration: " << duration << endl;
 	cout << "Distance: " << distance << endl;
 	cout << "Steps: " << steps << endl;
@@ -91,8 +85,8 @@ int Walk::getSteps() const	{
  * Parameter(s): steps: New value to set the steps of the walk to
  * Return      : N/A
  */
-void Walk::setSteps(int steps)	{
-	this->steps = steps;
+void Walk::setSteps(int newSteps)	{
+	steps = newSteps;
 }
 
 /*
@@ -102,7 +96,7 @@ void Walk::setSteps(int steps)	{
  *				 activity: The activity to use to calculate the calories burnt with the user
  * Return      : Amount of calories burnt with this activity for the user
  */
-static int Walk::calculateCaloriesBurnt(User * user, Walk * activity) const	{
+int Walk::calculateCaloriesBurnt(User * user, Walk * activity) 	{
 	//To do later for calculating calories
 	return 0;
 }

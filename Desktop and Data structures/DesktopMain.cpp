@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 	//Add any needed extra functions
 	cout << "********************************************************************************************************************************" << endl;
 	
-	Facade *instance = Facade.getInstance();
+	Facade * instance = Facade::instance();
 	//Load data stored 
 	//instance->load();
 	
@@ -59,7 +59,14 @@ int main(int argc, char *argv[]){
 		//Get the command by breaking the command into vector of strings
 		try	{
 			//Create record of strings and use something like CSVParser to get the seperating of arguments and command 
-			vector<string> *arguments = instance.getArguments(line);
+			vector<string> *arguments = instance->getArguments(line);
+			if(arguments->size() == 0)	{
+				//No command put in
+				//delete arguments
+				delete arguments;
+				continue;
+			}
+			
 			string command = arguments->at(0);
 		
 		
@@ -74,7 +81,7 @@ int main(int argc, char *argv[]){
 				currentUser = NULL;
 				
 			}else if(command == "showPastActivities")	{
-				instance->showAllPastActities(currentUser);
+				instance->showPastActivities(currentUser);
 				
 			}else if(command == "addActivity"){
 				instance->addActivity(currentUser, arguments);
@@ -105,14 +112,16 @@ int main(int argc, char *argv[]){
 				
 			}else if(command == "quit")	{
 				quit = true;
+			}else	{
+				cout << "Invalid Command" << endl;
 			}
-			
+			//delete arguments
+			delete arguments;
 		}catch (string &msg)	{
 			cout << msg.c_str() << endl;
 		
 		}
-		//delete arguments
-		delete arguments;
+		
 	}
 
 	//Save data to load back on next startup

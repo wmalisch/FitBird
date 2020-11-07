@@ -35,7 +35,7 @@ Activity::Activity(std::string name, User * user, struct tm date, struct tm star
 	this->type = type;
 	this->elevationGain = elevationGain;
 	
-	this->caloriesBurnt = this->calculateCaloriesBurnt(user, this);
+	this->caloriesBurnt = 0;
 }
 
 /*
@@ -44,7 +44,7 @@ Activity::Activity(std::string name, User * user, struct tm date, struct tm star
  * Parameter(s): N/A
  * Return      : N/A
  */
-virtual ~Activity()	{
+Activity::~Activity()	{
 	
 }
 
@@ -54,17 +54,19 @@ virtual ~Activity()	{
  * Parameter(s): N/A
  * Return      : N/A
  */
-virtual Activity::view() const	{
+void Activity::view() const	{
 	cout << endl;
 	cout << "Name: " << name << endl;
 	cout << "User: " << user->getName() << endl;
-	char buffer [80];
-	strftime(buffer, 60, "%Y-%m-%d", &date); 
-	cout << "Date: " << buffer << endl;
-	strftime(buffer, 60, "%I:%M%p", &start); 
-	cout << "Start time: " << buffer << endl;
-	strftime(buffer, 60, "%I:%M%p", &end); 
-	cout << "End time: " << buffer << endl;
+	char buffer1 [60];
+	strftime(buffer1, 60, "%d-%m-%Y", &date); 
+	cout << "Date: " << buffer1 << endl;
+	char buffer2 [60];
+	strftime(buffer2, 60, "%I:%M%p", &start); 
+	cout << "Start time: " << buffer2 << endl;
+	char buffer3 [60];
+	strftime(buffer3, 60, "%I:%M%p", &end); 
+	cout << "End time: " << buffer3 << endl;
 	cout << "Duration: " << duration << endl;
 	cout << "Distance: " << distance << endl;
 	cout << "Type: " << type << endl;
@@ -205,12 +207,11 @@ void Activity::setDuration(int duration)	{
 
 /*
  * Name        : calculateCaloriesBurnt
- * Description : Protected method to calculate the calories burnt for this activity and user
- * Parameter(s): user: The user to calculate the calories burnt of
- *				 activity: The activity to use to calculate the calories burnt with the user
- * Return      : Amount of calories burnt with this activity for the user
+ * Description : Return the calories brunt by the 
+ * Parameter(s): duration: The duration to set the activity to
+ * Return      : N/A
  */
-static virtual int Activity::calculateCaloriesBurnt(User * user, Activity * activity) const	{
-	//Implement at later date
+int Activity::calculateCaloriesBurnt(User * user, Activity * activity)	{
+	//To do for later time
 	return 0;
 }

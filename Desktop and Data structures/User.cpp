@@ -29,7 +29,7 @@ User::User(string name, string password, int age, int weight, int height, string
 	this->height = height;
 	this->sex = sex;
 	stepGoal = 0;
-	activities = new vector<Activity>();
+	activities = new vector<Activity *>();
 }
 
 /*
@@ -77,9 +77,11 @@ void User::view() const	{
  * Parameter(s): N/A
  * Return      : N/A
  */
-void showProgress() const	{
+ /*
+void showProgress()	{
 	//To be implemented
 }
+*/
 
 /*
  * Name        : showActivities
@@ -90,7 +92,7 @@ void showProgress() const	{
 void User::showActivities() const	{
 	for(int index = 0; index < activities->size(); index++)	{
 		cout << endl;
-		(activities->at(index)).view();
+		(activities->at(index))->view();
 	}
 }
 
@@ -100,16 +102,16 @@ void User::showActivities() const	{
  * Parameter(s): newActivity: The new activity to enter if not already same date and name of activity in user
  * Return      : N/A
  */
-void User::addActivity(Activity newActivity)	{
+void User::addActivity(Activity * newActivity)	{
 	//Try to find if activity is already in activities
 	bool add = true;
 	for(int index = 0; index < activities->size(); index++)	{
-		Activity activity = activities->at(index);
-		if(activity.getName() == newActivity.getName())	{
-			struct tm date1 = activity.getDate();
-			struct tm date2 = newActivity.getDate();
+		Activity * activity = activities->at(index);
+		if(activity->getName() == newActivity->getName())	{
+			struct tm date1 = activity->getDate();
+			struct tm date2 = newActivity->getDate();
 			
-			if(date1.tm_mdate == date2.tm_mdate && date1.tm_mon == date2.tm_mon && date1.tm_year == date2.tm_year)	{
+			if(date1.tm_mday == date2.tm_mday && date1.tm_mon == date2.tm_mon && date1.tm_year == date2.tm_year)	{
 				add = false;
 				break;
 			}
@@ -131,11 +133,12 @@ void User::addActivity(Activity newActivity)	{
  */
 void User::removeActivity(string name, int day, int month, int year)	{
 	for(int index = 0; index < activities->size(); index++)	{
-		Activity activity = activities->at(index);
-		if(name == activity.getName())	{
-			struct tm date = activity.getDate();
-			if(date.tm_mdate == day && (date.tm_mon - 1) == month && (date.tm_year - 1900) == year)	{
-				activities->erase(index);
+		Activity * activity = activities->at(index);
+		if(name == activity->getName())	{
+			struct tm date = activity->getDate();
+			if(date.tm_mday == day && date.tm_mon == month && date.tm_year  == year)	{
+				
+				activities->erase(activities->begin() + index);
 			}
 		}
 	}
@@ -207,8 +210,8 @@ int User::getStepGoal() const	{
  * Parameter(s): age: The age to set for the user
  * Return      : N/A
  */
-void User::setAge(int age)	{
-	this->age = age;
+void User::setAge(int newAge)	{
+	age = newAge;
 }
 
 /*
@@ -217,8 +220,8 @@ void User::setAge(int age)	{
  * Parameter(s): weight: The weight to set for the user
  * Return      : N/A
  */
-void User::setWeight(int weight)	{
-	this->weight = weight;
+void User::setWeight(int newWeight)	{
+	weight = newWeight;
 }
 
 /*
@@ -227,8 +230,8 @@ void User::setWeight(int weight)	{
  * Parameter(s): height: The height to set for the user
  * Return      : N/A
  */
-void User::setHeight(int height)	{
-	this->height = height;
+void User::setHeight(int newHeight)	{
+	height = newHeight;
 }
 
 /*
@@ -237,8 +240,8 @@ void User::setHeight(int height)	{
  * Parameter(s): sex: The sex to set for the user
  * Return      : N/A
  */
-void User::setSex(string sex)	{
-	this->sex = sex;
+void User::setSex(string newSex)	{
+	sex = newSex;
 }
 
 /*
@@ -247,7 +250,7 @@ void User::setSex(string sex)	{
  * Parameter(s): steps: The step goal to set for the user
  * Return      : N/A
  */
-void User::setStepGoal(int steps)	{
-	stepGoal = steps;
+void User::setStepGoal(int newSteps)	{
+	stepGoal = newSteps;
 }
 		
