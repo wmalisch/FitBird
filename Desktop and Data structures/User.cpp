@@ -119,6 +119,8 @@ void User::addActivity(Activity * newActivity)	{
 	}
 	if(add)	{
 		activities->push_back(newActivity);
+	}else	{
+		cout << "\nActivity on that day with entered name already exists" << end;;
 	}
 }
 
