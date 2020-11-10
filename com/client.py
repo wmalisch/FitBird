@@ -6,7 +6,7 @@ BUFFER_SIZE = 1024
 HEADER = 64
 PORT = 5050
 FORMAT = 'utf-8'
-SERVER = "127.0.0.1"
+SERVER = "127.0.1.1"
 ADDR = (SERVER, PORT)
 
 
@@ -27,6 +27,7 @@ def main():
         z = accel['z']
         
         client_socket.send(str(x).encode())
+        print(str(client_socket.recv(1024)))
     except ConnectionRefusedError:
         print('Error:  That host or port is not accepting connections.')
         sys.exit(1)

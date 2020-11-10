@@ -40,7 +40,7 @@ int main() {
         socklen_t sin_size=sizeof(struct sockaddr_in);
 
         int clientSock=accept(serverSock,(struct sockaddr*)&clientAddr, &sin_size);
-        cout << "[STARTING SERVER]";
+        cout << "[STARTING SERVER]" << (struct sockaddr*)&serverAddr << endl;
         
 
         while (1 == 1) {

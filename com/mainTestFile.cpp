@@ -23,7 +23,7 @@ int main(){
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = SERVER_PORT;
-    inet_pton(AF_INET, "127.0.0.1", &serverAddr.sin_addr); 
+    inet_pton(AF_INET, "127.0.1.1", &serverAddr.sin_addr); 
 
     if(bind(server_socket, (struct sockaddr*) &serverAddr, sizeof(struct sockaddr)) == -1){
         cerr << "[ERROR] port is currently in use" << endl;
