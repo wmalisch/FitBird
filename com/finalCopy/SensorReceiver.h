@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <string>
+#include <../../Desktop and Data structures/Activity.h>
 
 using namespace std;
 
@@ -23,18 +24,22 @@ class SensorReceiver
         
         // Sensor connection
         int sensor_initialize();
-        // int run_sensor();
-        // void end_sensor();
+        int run_sensor();
+        void end_sensor();
+
+        // Getters and setters required so far
         int getSwitch() const;
 
     protected:
     private:
         int server_socket;
+        int client_socket;
         sockaddr_in serverAddr;
         sockaddr_in client;
         socklen_t clientSize;
         char buffer[4096];
         int onSwitch;
+        Activity activity;
 
 };
 
