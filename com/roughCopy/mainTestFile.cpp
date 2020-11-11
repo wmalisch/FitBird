@@ -20,7 +20,7 @@ int main(){
         return -1;
     }
     // Bind the socket to a IP/ port
-    sockaddr_in serverAddr;
+    sockaddr_in serverAddr; 
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = SERVER_PORT;
     inet_pton(AF_INET, "127.0.0.1", &serverAddr.sin_addr); 
@@ -37,34 +37,35 @@ int main(){
     // Accept a call
     sockaddr_in client;
     socklen_t clientSize = sizeof(client);
-    char host[NI_MAXHOST];
-    char svc[NI_MAXSERV];
+    // char host[NI_MAXHOST];
+    // char svc[NI_MAXSERV];
+    cout << "About to Accept" << endl;
     int clientSocket = accept(server_socket, (struct sockaddr*)&client, &clientSize);
-    
+    cout << "accepted" << endl;
+
     if(clientSocket == -1){
         cerr << "[ERROR] Was not able to connect to socket" << endl;
         return -4;
     }
-    // Close the listening socket
-
-    close(server_socket);
-    memset(host,0,NI_MAXHOST);
-    memset(svc,0,NI_MAXSERV);
+    // // // Close the listening socket
+    // // close(server_socket);
+    // memset(host,0,NI_MAXHOST);
+    // memset(svc,0,NI_MAXSERV);
     
-    int result = getnameinfo((struct sockaddr*)&client, 
-        sizeof(client), 
-        host, 
-        NI_MAXHOST,
-        svc,
-        NI_MAXSERV,
-        0);
+    // int result = getnameinfo((struct sockaddr*)&client, 
+    //     sizeof(client), 
+    //     host, 
+    //     NI_MAXHOST,
+    //     svc,
+    //     NI_MAXSERV,
+    //     0);
 
-        // if(result){
-        cout << host << " connected on " << svc << endl;
-        // }else{
-        //     inet_ntop(AF_INET,&client.sin_addr, host, NI_MAXHOST);
-        //     cout << host << " connected on " << ntohs(client.sin_port) << endl;
-        // }
+    //     // if(result){
+    //     cout << host << " connected on " << svc << endl;
+    //     // }else{
+    //     //     inet_ntop(AF_INET,&client.sin_addr, host, NI_MAXHOST);
+    //     //     cout << host << " connected on " << ntohs(client.sin_port) << endl;
+    //     // }
 
     // While receiving - display message, echo message
     
@@ -83,9 +84,8 @@ int main(){
             break;
         }
         cout<< "Received: " << string(buffer,0,bytesRecv) << endl;
-
-        send(clientSocket, buffer, bytesRecv + 1, 0);
-        // display a message
+        
+        
     }
 
     // Close socket

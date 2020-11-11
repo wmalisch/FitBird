@@ -45,7 +45,7 @@ int main() {
 
         while (1 == 1) {
                 bzero(buffer, 1000);        
-
+                
                 //receive a message from a client
                 n = read(clientSock, buffer, 500);
                 string var = buffer;
