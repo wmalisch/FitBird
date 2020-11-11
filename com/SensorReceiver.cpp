@@ -48,10 +48,9 @@ int main() {
 
                 //receive a message from a client
                 n = read(clientSock, buffer, 500);
+                string var = buffer;
                 cout << "Confirmation code  " << n << endl;
-                cout << "Server received:  " << buffer << endl;
-
-                strcpy(buffer, "test");
+                cout << "Server received as string from buffer:  " << var << endl;
                 n = write(clientSock, buffer, strlen(buffer));
                 cout << "Confirmation code  " << n << endl;
         }

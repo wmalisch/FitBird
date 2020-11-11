@@ -14,7 +14,7 @@ int main(){
     PyRun_SimpleString("import sys");
 
     cout << "run sense.py" << endl;
-    PyRun_SimpleString("sys.path.append('sense.py')");
+    PyRun_SimpleString("sys.path.append('./sense.py')");
     
     cout << "Program over" << endl;
     return 0;
