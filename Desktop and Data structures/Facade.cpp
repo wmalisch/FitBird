@@ -208,8 +208,8 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			start.tm_min = startMin;
 			
 			tm end;
-			start.tm_hour = endHour;
-			start.tm_min = endMin;
+			end.tm_hour = endHour;
+			end.tm_min = endMin;
 			
 			//Get correct type of activity created
 			if(type == "Walk")	{
@@ -253,8 +253,8 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			start.tm_min = startMin;
 			
 			tm end;
-			start.tm_hour = endHour;
-			start.tm_min = endMin;
+			end.tm_hour = endHour;
+			end.tm_min = endMin;
 			
 			//Get correct type of activity created
 			if(type == "Walk")	{
