@@ -1,5 +1,11 @@
+#
+#   client.py
+#
+#	Author		   : Group 56
+#	Date		   : November 11, 2020
+#	Description    : 
+#
 from socket import *
-
 # sense_emu is the sensehat emulator package that comes with the raspberry pi for prototyping and
 # and development without the actual sensehat hardware. However we do have a sense hat on the way, and once
 # received, we will continue the next steps, which include, sensing orientation in the users pocket,
@@ -8,6 +14,7 @@ from socket import *
 from sense_emu import SenseHat
 import sys
 
+# Declare network constants for connecting to c++ SensorReceiver
 BUFFER_SIZE = 1024
 HEADER = 64
 PORT = 5050
@@ -18,24 +25,25 @@ ADDR = (SERVER, PORT)
 
 def main():
 
+    # Initialize sense hat
     sense = SenseHat()
     
     try:
+        # Connect to c++ SensorReceiver through sockets
         client_socket = socket(AF_INET, SOCK_STREAM)
         client_socket.connect(ADDR)
-        # while True:
-        #     x = sense.get_accelerometer_raw()
-        #     client_socket.send(str(x['x']).encode())
-        #     client_socket.send(str(x['y']).encode())
-        #     client_socket.send(str(x['z']).encode())
+        while True:
+            # Send accelerometer data until receive halt message from SensorReceiver
+            x = sense.get_accelerometer_raw()
+            client_socket.send(str(x['x']).encode())
+            client_socket.send(str(x['y']).encode())
+            client_socket.send(str(x['z']).encode())
+    
+    # Check for broken Connection
     except ConnectionRefusedError:
         print('Error:  That host or port is not accepting connections.')
         sys.exit(1)
-    
 
-    # except ConnectionRefusedError:
-    #     print('Error:  That host or port is not accepting connections.')
-    #     sys.exit(1)
-
+# Main function
 if __name__ == '__main__':
     main()

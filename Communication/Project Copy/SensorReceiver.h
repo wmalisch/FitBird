@@ -1,3 +1,11 @@
+/*
+ * main.cpp
+ *
+ *	Author		   : Group 56
+ *	Date		   : November 11, 2020
+ *	Description    : This is the header file outlining the functions and methods of the SensorReceiver class
+ *
+ */
 #include <iostream>
 #include <sys/types.h>
 #include <unistd.h>
@@ -17,8 +25,8 @@ using namespace std;
 class SensorReceiver
 {
     public:
-        // Constructor
-        SensorReceiver();
+        static SensorReceiver * instance();
+        
         // Destructor
         ~SensorReceiver();
         
@@ -31,7 +39,9 @@ class SensorReceiver
         int getSwitch() const;
 
     protected:
+        SensorReceiver();
     private:
+        static SensorReceiver * _instance;
         int server_socket;
         int client_socket;
         sockaddr_in serverAddr;
