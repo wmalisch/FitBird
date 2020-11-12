@@ -1,2 +1,68 @@
 GROUP 56 - PROJECT PROGRESSION UPDATE
 
+THis README is a quick description of the status of our project, to whom ever is marking this assignment. Please read before moving forward.
+
+
+
+COMPLETED WORK
+1. 'Desktop and Data Structures'/Activity.cpp
+2. 'Desktop and Data Structures'/Activity.h
+3. 'Desktop and Data Structures'/DesktopMain.cpp
+4. 'Desktop and Data Structures'/Facade.cpp
+5. 'Desktop and Data Structures'/Facade.h
+6. 'Desktop and Data Structures'/User.cpp
+7. 'Desktop and Data Structures'/User.h
+8. 'Desktop and Data Structures'/Walk.cpp
+9. 'Desktop and Data Structures'/Walk.h
+10. Casing (picture included in submission)
+
+All files listed above are working and consist of more than 30% of our user stories for our required features in terms of points. We wanted to stress this,
+because almost 50% of our time was spent researching and understanding:
+    1. How accelerometer's work
+    2. How the SenseHat rerieves data and how to convert this into steps, rather than plane magnitudes
+    3. How the C++ class will communicate with the python module that gets accelerometer data
+ 
+To compile:
+    cd 'Desktop and Data structures'
+    g++ -o main DesktopMain.cpp User.cpp Activity.cpp, Walk.cpp Facade.cpp
+To run:
+    ./main
+
+Follow the instructions, enter "quit" to exit the program.
+
+
+
+WORK IN PROGRESS
+1. Communication/'Project Copy'/SensorReceiver
+2. Communication/'Project Copy'/SensorReceiverWalk
+3. Communication/'Project Copy'/SensorReceiverRun
+4. Communication/'Project Copy'/SensorReceiverBike
+5. Communication/'Project Copy'/client.py
+
+This is the portion that we spent a lot of time researching and understanding, rather than actually coding. We have managed to implement a file C++ file that receives the accelerometer data from a python script via sockets, seen in the Communications/'Testing Copy' directory. 
+We are now converting this into a class, which will be using multiple processing to run both client and server applications within the SensorReceiver class. We will also be creating sensors for each type of activity.
+
+Some of our research on tracking steps taught us that we need to implement an orientation function. Our program will calculate steps relative to the positioning of the device in the users pocket. For example,
+if the user goes on two walks, one walk with the sensehat's face towards the leg, one with it away from the leg, the accelerometer data returned by the sense hat would need to be interpretd differently, as the
+device's orientation is now different. Part of the reason we could not submit functionality for the sensing feature was due to this functionality.
+
+However, if you would like to see how the accelerometer gets data, open two terminals in the raspberry pi VM:
+
+    // First go to, the raspberry icon at top left, click programming, click Sens HAT Emulator to open Sense Hat Emulator
+
+    // First terminal window
+    cd Communication/Testing Folder
+    g++ mainTestFile.cpp -o main
+    
+    // Second terminal window
+    cd Communication/Testing Folder
+    python3 client.py
+ 
+    // To quit
+    Ctrl C 
+
+
+NOT STARTED
+
+All non required user stories have not been started. We hope to implement these if we have enough time.
+
