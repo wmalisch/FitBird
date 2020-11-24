@@ -60,11 +60,12 @@ int main(int argc, char *argv[]){
 		
 		string line;
 		getline(cin, line);
+		
+		//Create record of strings and use getArguments to get the seperated arguments in command 
+		vector<string> *arguments = instance->getArguments(line, separator);
+		
 		//Get the command by breaking the command into vector of strings
 		try	{
-			
-			//Create record of strings and use something like CSVParser to get the seperating of arguments and command 
-			vector<string> *arguments = instance->getArguments(line, separator);
 			if(arguments->size() == 0)	{
 				//No command put in
 				//delete arguments
@@ -120,13 +121,13 @@ int main(int argc, char *argv[]){
 			}else	{
 				cout << "Invalid Command" << endl;
 			}
-			//delete arguments
-			delete arguments;
+			
 		}catch (string &msg)	{
 			cout << msg.c_str() << endl;
-		
+			
 		}
-		
+		//delete arguments 
+		delete arguments;
 	}
 
 	//Save data to load back on next startup

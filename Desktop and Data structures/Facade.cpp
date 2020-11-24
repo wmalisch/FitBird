@@ -490,7 +490,6 @@ void Facade::load()	{
 		while(getline(activitySaveFile, line))	{
 			//Values from the line in file
 			vector<string> * values = getArguments(line, separator);
-			values = getArguments(line, separator);
 			string userName = values->at(0);
 			string type = values->at(1);
 			string activityName = values->at(2);
