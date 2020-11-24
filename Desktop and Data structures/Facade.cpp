@@ -7,6 +7,8 @@
  *
  */
  #include "Facade.h"
+ #define USER_SAVE_FILE "saved_users.csv"
+ #define ACTIVITY_SAVE_FILE "saved_activities.csv"
  
  using namespace std;
 	
@@ -455,6 +457,86 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
  */
 void Facade::load()	{
 	const char separator = ',';
+	//Files to read saved data from
+	ifstream userSaveFile(USER_SAVE_FILE);
+	ifstream activitySaveFile(ACTIVITY_SAVE_FILE);
+	//Line from file
+	string line;
+	
+	if(userSaveFile.is_open() && activitySaveFile.is_open())	{
+		//Load in the users
+		while(getline(userSaveFile, line))	{
+			//Values from the line in file
+			vector<string> * values = getArguments(line, separator);
+			string name = values->at(0);
+			string pass = values->at(1);
+			string sex = values->at(2);
+			int age = stoi(values->at(3));
+			int weight = stoi(values->at(4));
+			int height = stoi(values->at(5));
+			int stepGoal = stoi(values->at(6));
+			
+			//Create User with data
+			User * newUser = new User(name, pass, age, weight, height, sex);
+			newUser->setStepGoal(stepGoal);
+			//Put user in list of users
+			users.push_back(newUser);
+			//delete current values vector
+			delete values;
+		}
+		
+		//Each users activities are grouped together in order saved in user save file so can loop through activities and put them in correct user
+		int userIndex = 0;
+		while(getline(activitySaveFile, line))	{
+			//Values from the line in file
+			vector<string> * values = getArguments(line, separator);
+			values = getArguments(line, separator);
+			string userName = values->at(0);
+			string type = values->at(1);
+			string activityName = values->at(2);
+			int day = stoi(values->at(3));
+			int month = stoi(values->at(4));
+			int year = stoi(values->at(5));
+			int startHour = stoi(values->at(6));
+			int startMin = stoi(values->at(7));
+			int endHour = stoi(values->at(8));
+			int endMin = stoi(values->at(9));
+			int duration = stoi(values->at(10));
+			double distance = stod(values->at(11));
+			double elevationGain = stod(values->at(12));
+			
+			tm  date;
+			date.tm_mday = day;
+			date.tm_mon = month;
+			date.tm_year = year;
+			
+			tm start;
+			start.tm_hour = startHour;
+			start.tm_min = startMin;
+			
+			tm end;
+			end.tm_hour = endHour;
+			end.tm_min = endMin;
+			
+			User * currentUser = users.at(userIndex);
+			//Check if it is the next user and loop until it is the correct User
+			while(userName != currentUser->getName())	{
+				//Not the current user so get the next user as this is the first activity for the next user
+				currentUser = users.at(++userIndex);
+			}
+			
+			//Check what type it is
+			if(type == "Walk")	{
+				int steps = stoi(values->at(13));
+				
+				Walk * walk = new Walk(activityName, currentUser, date, start, end, duration, distance, steps, type, elevationGain);
+				currentUser->addActivity(walk);
+				
+			}
+			//Delete vector for current line
+			delete values;
+		}
+	}
 }
 
 /*
@@ -464,8 +546,8 @@ void Facade::load()	{
  * Return      : N/A
  */
 void Facade::save()	{
-	ofstream userSaveFile("saved_users.csv");
-	ofstream activitySaveFile("saved_activities.csv");
+	ofstream userSaveFile(USER_SAVE_FILE);
+	ofstream activitySaveFile(ACTIVITY_SAVE_FILE);
 	
 	
 	if(userSaveFile.is_open() && activitySaveFile.is_open())	{
