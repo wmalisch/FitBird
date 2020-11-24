@@ -20,6 +20,7 @@ class Walk : public Activity	{
 		Walk(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain);
 		~Walk();
 		void view() const ;
+		std::string saveString() const;
 		int getSteps() const ;
 		void setSteps(int newSteps);
 		

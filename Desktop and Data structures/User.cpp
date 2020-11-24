@@ -29,7 +29,6 @@ User::User(string name, string password, int age, int weight, int height, string
 	this->height = height;
 	this->sex = sex;
 	stepGoal = 0;
-	activities = new vector<Activity *>();
 }
 
 /*
@@ -39,7 +38,11 @@ User::User(string name, string password, int age, int weight, int height, string
  * Return      : N/A
  */
 User::~User()	{
-	delete activities;
+	//Delete the activities
+	for(int index = 0; index < activities.size(); index++)	{
+		Activity * activity = activities.at(index);
+		delete activity;
+	}
 }
 
 /*
@@ -72,16 +75,33 @@ void User::view() const	{
 }
 
 /*
+ * Name        : saveString
+ * Description : Sends back a string to use for csv to save to file as
+ * Parameter(s): N/A
+ * Return      : String to use to save user to file
+ */
+string User::saveString() const 	{
+	string saveString = "";
+	
+	saveString += "'" + name + "',";
+	saveString += "'" + password + "',";
+	saveString += "'" + sex + "',";
+	saveString += to_string(age) + "," + to_string(weight) + "," + to_string(height) + "," + to_string(stepGoal) + "\n";
+		
+	return saveString;
+}
+
+
+/*
  * Name        : showProgress
  * Description : Shows the progress over time of the user by showing activities and the users progress of step goals over time
  * Parameter(s): N/A
  * Return      : N/A
  */
- /*
-void showProgress()	{
+void showProgress(string orderedBy)	{
 	//To be implemented
 }
-*/
+
 
 /*
  * Name        : showActivities
@@ -90,9 +110,9 @@ void showProgress()	{
  * Return      : N/A
  */
 void User::showActivities() const	{
-	for(int index = 0; index < activities->size(); index++)	{
+	for(int index = 0; index < activities.size(); index++)	{
 		cout << endl;
-		(activities->at(index))->view();
+		(activities.at(index))->view();
 	}
 }
 
@@ -105,8 +125,8 @@ void User::showActivities() const	{
 void User::addActivity(Activity * newActivity)	{
 	//Try to find if activity is already in activities
 	bool add = true;
-	for(int index = 0; index < activities->size(); index++)	{
-		Activity * activity = activities->at(index);
+	for(int index = 0; index < activities.size(); index++)	{
+		Activity * activity = activities.at(index);
 		if(activity->getName() == newActivity->getName())	{
 			struct tm date1 = activity->getDate();
 			struct tm date2 = newActivity->getDate();
@@ -118,7 +138,7 @@ void User::addActivity(Activity * newActivity)	{
 		}
 	}
 	if(add)	{
-		activities->push_back(newActivity);
+		activities.push_back(newActivity);
 	}else	{
 		cout << "\nActivity on that day with entered name already exists" << endl;
 	}
@@ -134,13 +154,13 @@ void User::addActivity(Activity * newActivity)	{
  * Return      : N/A
  */
 void User::removeActivity(string name, int day, int month, int year)	{
-	for(int index = 0; index < activities->size(); index++)	{
-		Activity * activity = activities->at(index);
+	for(int index = 0; index < activities.size(); index++)	{
+		Activity * activity = activities.at(index);
 		if(name == activity->getName())	{
 			struct tm date = activity->getDate();
 			if(date.tm_mday == day && date.tm_mon == month && date.tm_year  == year)	{
 				
-				activities->erase(activities->begin() + index);
+				activities.erase(activities.begin() + index);
 			}
 		}
 	}
@@ -195,7 +215,17 @@ int User::getHeight() const	{
 string User::getSex() const	{
 	return sex;
 }
-
+/*
+ * Name        : getActivities
+ * Description : Getter method for the list of activities of the user
+ * Parameter(s): N/A
+ * Return      : Vector of activities of user
+ */
+vector<Activity *> User::getActivities() const	{
+	return activities;
+}
+	
+	
 /*
  * Name        : getStepGoal
  * Description : Getter method for the step goal of the user

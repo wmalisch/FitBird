@@ -76,6 +76,28 @@ void Activity::view() const	{
 }
 
 /*
+ * Name        : saveString
+ * Description : Returns a string to use to save for a csv file
+ * Parameter(s): N/A
+ * Return      : String to use to save activity
+ */
+string Activity::saveString() const	{
+	string saveString = "";
+	string userName = user->getName();
+	
+	saveString += "'" + userName + "',";
+	saveString += "'" + type + "',";
+	saveString += "'" + name + "',";
+	saveString += to_string(date.tm_mday) + "," + to_string(date.tm_mon) + "," + to_string(date.tm_year) + ",";
+	saveString += to_string(start.tm_hour) + "," + to_string(start.tm_min) + "," + to_string(end.tm_hour) + "," + to_string(end.tm_min) + ",";
+	saveString += to_string(duration) + "," + to_string(distance) + ",";
+	saveString += to_string(elevationGain) + "," + to_string(caloriesBurnt) + "\n";
+		
+	return saveString;
+}
+
+
+/*
  * Name        : getName
  * Description : Getter method of the name of activity
  * Parameter(s): N/A

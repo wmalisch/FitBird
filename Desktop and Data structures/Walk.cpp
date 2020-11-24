@@ -70,6 +70,28 @@ void Walk::view() const	{
 }
 
 /*
+ * Name        : saveString
+ * Description : Sends back a string to use for csv to save to file as
+ * Parameter(s): N/A
+ * Return      : String to use to save walking activity
+ */
+std::string Walk::saveString() const	{
+	string saveString = "";
+	string userName = user->getName();
+	
+	saveString += "'" + userName + "',";
+	saveString += "'" + type + "',";
+	saveString += "'" + name + "',";
+	saveString += to_string(date.tm_mday) + "," + to_string(date.tm_mon) + "," + to_string(date.tm_year) + ",";
+	saveString += to_string(start.tm_hour) + "," + to_string(start.tm_min) + "," + to_string(end.tm_hour) + "," + to_string(end.tm_min) + ",";
+	saveString += to_string(duration) + "," + to_string(distance) + ",";
+	saveString += to_string(elevationGain) + "," + to_string(caloriesBurnt) + "," + to_string(steps) + "\n";
+		
+	return saveString;
+}
+
+
+/*
  * Name        : getSteps
  * Description : Getter method of the steps of a walk activity
  * Parameter(s): N/A

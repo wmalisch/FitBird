@@ -46,15 +46,15 @@ void Facade::addUser(std::vector<std::string>* arguments)	{
 	string sex = arguments->at(6);
 	
 	//Check if the user with username already exists
-	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index)).getName())	{
+	for(int index = 0; index < users.size(); index++)	{
+		if(username == (users.at(index))->getName())	{
 			message = "\nUsername taken\n";
 			throw message;
 		}
 	}
 	
 	User * newUser = new User(username, password, age, weight, height, sex);
-	users->push_back(*newUser);
+	users.push_back(newUser);
 }
 
 /*
@@ -75,10 +75,10 @@ User * Facade::login(std::vector<std::string>* arguments)	{
 	string username = arguments->at(1);
 	string password = arguments->at(2);
 	
-	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index)).getName())	{
-			if((users->at(index)).verify(password))	{
-				return &(users->at(index));
+	for(int index = 0; index < users.size(); index++)	{
+		if(username == (users.at(index))->getName())	{
+			if((users.at(index))->verify(password))	{
+				return users.at(index);
 				
 			}else	{
 				message = "\nIncorrect Password!\n";
@@ -98,7 +98,7 @@ User * Facade::login(std::vector<std::string>* arguments)	{
  * Parameter(s): command: string that has the command line text
  * Return      : Pointer to a vector of strings that are split into seperate arguments
  */
-std::vector<std::string> * Facade::getArguments(string command)	{
+std::vector<std::string> * Facade::getArguments(string command, const char separator)	{
 	//Constants to tell what state the char running through the line is in
 	const int NON_QUOTED = 0;
 	const int QUOTED = 1;
@@ -117,7 +117,7 @@ std::vector<std::string> * Facade::getArguments(string command)	{
 				//Reset argument to take in the string of the next argument
 				currentArgument.clear();
 				break;
-			}else if(character == ' ')	{ 
+			}else if(character == separator)	{ 
 				//End of field, push on the arguments the string
 				if(currentArgument == "")	{
 					//The argument is empty
@@ -291,7 +291,8 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
  * Parameter(s): user: The user to view their progress of
  * Return      : N/A
  */
-void Facade::showProgress(User * user)	{
+void Facade::showProgress(User * user, vector<string>* arguments)	{
+	//Get sortBy string
 	//user->showProgress();
 }
 
@@ -453,7 +454,7 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
  * Return      : N/A
  */
 void Facade::load()	{
-	//To do Later
+	const char separator = ',';
 }
 
 /*
@@ -463,7 +464,33 @@ void Facade::load()	{
  * Return      : N/A
  */
 void Facade::save()	{
-	//To do Later
+	ofstream userSaveFile("saved_users.csv");
+	ofstream activitySaveFile("saved_activities.csv");
+	
+	
+	if(userSaveFile.is_open() && activitySaveFile.is_open())	{
+		//Go through each user
+		for(int index = 0; index < users.size(); index++)	{
+			User * currentUser = users.at(index);
+			
+			vector<Activity *> usersAct = currentUser->getActivities();
+			//Go through the user's activities
+			for(int index = 0; index < usersAct.size(); index++)	{
+				//Write activity to file
+				activitySaveFile << (usersAct.at(index))->saveString();
+			}
+			
+			//Write user to file
+			userSaveFile <<	currentUser->saveString();
+			
+		}
+		
+		activitySaveFile.close();
+		userSaveFile.close();
+		
+	}else{
+		cout << endl << "Unable to open files to save to" << endl;
+	}
 }
 
 /*
@@ -473,7 +500,12 @@ void Facade::save()	{
  * Return      : N/A
  */
 Facade::~Facade()	{
-	delete users;
+	//Delete users created
+	for(int index = 0; index < users.size(); index++)	{
+		User * user = users.at(index);
+		delete user;
+	}
+	
 }
 
 /*
@@ -483,6 +515,6 @@ Facade::~Facade()	{
  * Return      : N/A
  */
 Facade::Facade()	{
-	 users = new vector<User>();
+	 
 }
  

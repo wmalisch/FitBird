@@ -22,7 +22,8 @@ class User	{
 		~User();
 		bool verify(std::string) const ;
 		void view() const ;
-		//void showProgress();
+		std::string saveString() const ;
+		void showProgress(std::string orderedBy);
 		void showActivities() const ;
 		void addActivity(Activity *) ;
 		void removeActivity(std::string name, int day, int month, int year);
@@ -31,6 +32,7 @@ class User	{
 		int getWeight() const ;
 		int getHeight() const ;
 		std::string getSex() const ;
+		std::vector<Activity *> getActivities() const;
 		int getStepGoal() const ;
 		void setAge(int newAge);
 		void setWeight(int newWeight);
@@ -46,7 +48,7 @@ class User	{
 		int height;
 		std::string sex;
 		int stepGoal;
-		std::vector<Activity *> * activities;
+		std::vector<Activity *> activities;
 		
 		
 	

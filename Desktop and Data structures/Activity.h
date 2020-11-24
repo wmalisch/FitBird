@@ -19,6 +19,7 @@ class Activity {
 		Activity(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, std::string type, double elevationGain);
 		virtual ~Activity();
 		virtual void view() const ;
+		virtual std::string saveString() const;
 		std::string getName() const ;
 		User *getUser() const ;
 		struct tm getDate() const ;

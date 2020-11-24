@@ -23,6 +23,7 @@ int main(int argc, char *argv[]){
 	//Print out a menu
 	cout << "*******************************************************************************************************************************" << endl;
 	cout << "Types of activities allowed: Walk" << endl;
+	cout << "OrderBy fields allowed: Not yet implemented" << endl;	//Once showProgress has been implemented update this
 	cout << "Command usages:" << endl;
 	cout << "  addUser username password age weight(kg) height(cm) sex(M/F)" << endl;
 	cout << "  login username password" << endl;
@@ -32,7 +33,7 @@ int main(int argc, char *argv[]){
 	cout << "  showPastActivities" << endl;
 	cout << "  addActivity 'name' day(int) month(int) year(int) startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
 	cout << "  addActivity 'name' startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
-	cout << "  showProgress (once logged in)" << endl;
+	cout << "  showProgress OrderBy (once logged in)" << endl;
 	cout << "  viewProfile (once logged in)" << endl;
 	cout << "  removeActivity 'name' day month year" << endl;
 	cout << "  setStepGoal step_goal" << endl;
@@ -42,10 +43,12 @@ int main(int argc, char *argv[]){
 	cout << "  updateAge age" << endl;
 	//Add any needed extra functions
 	cout << "*******************************************************************************************************************************" << endl;
+	//Separator for the commands
+	const char separator = ' ';
 	
 	Facade * instance = Facade::instance();
 	//Load data stored 
-	//instance->load();
+	instance->load();
 	
 	//Keep the current user stored
 	User *currentUser = NULL;
@@ -59,8 +62,9 @@ int main(int argc, char *argv[]){
 		getline(cin, line);
 		//Get the command by breaking the command into vector of strings
 		try	{
+			
 			//Create record of strings and use something like CSVParser to get the seperating of arguments and command 
-			vector<string> *arguments = instance->getArguments(line);
+			vector<string> *arguments = instance->getArguments(line, separator);
 			if(arguments->size() == 0)	{
 				//No command put in
 				//delete arguments
@@ -126,7 +130,7 @@ int main(int argc, char *argv[]){
 	}
 
 	//Save data to load back on next startup
-	//instance->save();
+	instance->save();
 	
 	delete instance;
 	
