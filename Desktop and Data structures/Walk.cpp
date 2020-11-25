@@ -1,29 +1,28 @@
-/*
- * Walk.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Code file to implement the methods of the Walk class
+/**
+ * @brief Code file to implement the methods of the Walk class
+ * @details Code file to implement methods of the Walk class for the user to create the Walk activity
+ * @author Matthew Temniuk
  *
  */
 #include "Walk.h"
 
 using namespace std;
 
-/*
- * Name        : Walk
- * Description : Deletion of a Walk object
- * Parameter(s): name: The name of the activity
- *				 user: The user the activity is associated with
- *				 date: The date the activity was done
- *				 start: The start time of the activity
- *				 end: The end time of the activity
- *				 duration: The time from start to conclusion  of activity
- *				 distance: The distance traveled on the activity
- *				 steps: The amount of steps taken in activity
- *				 type: The type of activity
- *				 elevationGain: The elevation gain of the activity
- * Return      : N/A
+/**
+ * @brief Creator for a Walk to be added to a user
+ * @details Creator for a Walk to be added to a user. Setting the values given to the stored values
+ * @author Matthew Temniuk
+ * @param name: The name of the activity
+ * @param user: The user the activity is associated with
+ * @param date: The date the activity was done
+ * @param start: The start time of the activity
+ * @param end: The end time of the activity
+ * @param duration: The time from start to conclusion  of activity
+ * @param distance: The distance traveled on the activity
+ * @param steps: The amount of steps taken in activity
+ * @param type: The type of activity
+ * @param elevationGain: The elevation gain of the activity
+ * 
  */	
 Walk::Walk(string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain): Activity(name, user, date, start, end, duration, distance, type, elevationGain)	
 {
@@ -32,21 +31,21 @@ Walk::Walk(string name, User * user, struct tm date, struct tm start, struct tm 
 	this->caloriesBurnt = this->calculateCaloriesBurnt(user, this);
 }
 
-/*
- * Name        : ~Walk
- * Description : Deletion of a Walk object
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Deletion of a Walk object
+ * @details Deletion of a Walk object
+ * @author Matthew Temniuk
+ * 
  */
 Walk::~Walk()	{
 	
 }
 
-/*
- * Name        : view
- * Description : Prints out information of the Walk activity
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Prints out information of the Walk activity
+ * @details Format the Walk activity information and print it out to the console
+ * @author Matthew Temniuk
+ *
  */
 void Walk::view() const	{
 	cout << endl;
@@ -69,11 +68,12 @@ void Walk::view() const	{
 	cout << "Calories burnt: " << caloriesBurnt << endl;
 }
 
-/*
- * Name        : saveString
- * Description : Sends back a string to use for csv to save to file as
- * Parameter(s): N/A
- * Return      : String to use to save walking activity
+/**
+ * @brief Sends back a string to use for csv to save to file as
+ * @details Returns a string of how to format the Walk activity to be saved into the save file
+ * @author Matthew Temniuk
+ * @return String to use to save walking activity
+ * 
  */
 std::string Walk::saveString() const	{
 	string saveString = "";
@@ -91,32 +91,36 @@ std::string Walk::saveString() const	{
 }
 
 
-/*
- * Name        : getSteps
- * Description : Getter method of the steps of a walk activity
- * Parameter(s): N/A
- * Return      : name of activity
+/**
+ * @brief Getter method of the steps of a walk activity
+ * @details Getter method of the steps of a walk activity
+ * @author Matthew Temniuk
+ * @return name of activity
+ *
  */
 int Walk::getSteps() const	{
 	return steps;
 }
 
-/*
- * Name        : SetSteps
- * Description : Setter method of the steps of a walk activity
- * Parameter(s): steps: New value to set the steps of the walk to
- * Return      : N/A
+/**
+ * @brief Setter method of the steps of a walk activity
+ * @details Setter method of the steps of a walk activity
+ * @author Matthew Temniuk
+ * @param newSteps: New value to set the steps of the walk to
+ * 
  */
 void Walk::setSteps(int newSteps)	{
 	steps = newSteps;
 }
 
-/*
- * Name        : calculateCaloriesBurnt
- * Description : Protected method to calculate the calories burnt for this activity and user
- * Parameter(s): user: The user to calculate the calories burnt of
- *				 activity: The activity to use to calculate the calories burnt with the user
- * Return      : Amount of calories burnt with this activity for the user
+/**
+ * @brief Protected method to calculate the calories burnt for this activity and user
+ * @details Protected method used in constructor to calculate the calories burnt for the user and activity
+ * @author 
+ * @param user: The user to calculate the calories burnt of
+ * @param activity: The activity to use to calculate the calories burnt with the user
+ * @return Amount of calories burnt with this activity for the user
+ *
  */
 int Walk::calculateCaloriesBurnt(User * user, Walk * activity) 	{
 	//To do later for calculating calories

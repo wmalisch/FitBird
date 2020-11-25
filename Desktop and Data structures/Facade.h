@@ -1,9 +1,7 @@
-/*
- * Facade.h
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing the facade of the program
+/**
+ * @brief Header file describing the facade of the program
+ * @details Header file to describe the class of facade to hide the backend from user
+ * @author Matthew Temniuk
  *
  */
  

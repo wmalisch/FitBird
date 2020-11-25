@@ -1,9 +1,7 @@
-/*
- * Walk.h
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing a Walk activity class
+/**
+ * @brief Header file describing a Walk activity class
+ * @details Header file for declaring the Walk activity class to keep track of walking data and perform algorithms on this data. Subclass of Activity
+ * @author Matthew Temniuk
  *
  */
 #ifndef WALK_H_

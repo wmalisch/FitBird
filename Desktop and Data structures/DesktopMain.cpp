@@ -1,9 +1,7 @@
-/*
- * DesktopMain.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Currently console based used for desktop usage to make changes and perform algorithms on the data.
+/**
+ * @brief Console based menu to interact with users and activities
+ * @details Currently console based used for desktop usage to make changes and perform algorithms on the data.
+ * @author Matthew Temniuk
  *
  */
 #include <iostream>
@@ -12,12 +10,13 @@
 
 using namespace std;
 
-/*
- * Name        : main
- * Description : Main program to run the desktop for fitness wearable
- * Parameter(s): argc: The number (int) of command line parameters used to call the program.
-				 argv: Does not use any arguments
- * Return      : int for exit status of the main program
+/**
+ * @brief Main program to run the desktop for fitness wearable
+ * @details Main function to interact with a menu to edit data
+ * @param argc: The number (int) of command line parameters used to call the program.
+ * @param argv: Does not use any arguments but if command line arguments are used values go here
+ * @return int for exit status of the main program
+ *
  */
 int main(int argc, char *argv[]){
 	//Print out a menu

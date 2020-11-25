@@ -1,9 +1,7 @@
-/*
- * Activity.h
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing a base Activity class
+/**
+ * @brief Header file describing a base Activity class
+ * @details Header file to declare the activity class for use to track a users fitness activity
+ * @author Matthew Temniuk
  *
  */
 #ifndef ACTIVITY_H_

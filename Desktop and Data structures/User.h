@@ -1,9 +1,7 @@
-/*
- * Facade.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing the class for the user to store data and perform methods on the data
+/**
+ * @brief Header file describing the class for the user to store data and perform methods on the data
+ * @details Header file describing the class for the user to store data for fitness data and keep track of activities
+ * @author Matthew Temniuk
  *
  */
  

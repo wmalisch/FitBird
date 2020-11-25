@@ -1,28 +1,27 @@
-/*
- * Activity.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Code file to implement the methods of the Activity class
+/**
+ * @brief Code file to implement the methods of the Activity class
+ * @details Code file to implement the methods of the base Activity used to track a users fitness activity
+ * @author Matthew Temniuk
  *
  */
 #include "Activity.h"
  
 using namespace std;
 
-/*
- * Name        : Activity
- * Description : Constructor of an Activity object
- * Parameter(s): name: The name of the activity
- *				 user: The user the activity is associated with
- *				 date: The date the activity was done
- *				 start: The start time of the activity
- *				 end: The end time of the activity
- *				 duration: The time from start to conclusion  of activity
- *				 distance: The distance traveled on the activity
- *				 type: The type of activity
- *				 elevationGain: The elevation gain of the activity
- * Return      : N/A
+/**
+ * @brief Constructor of an Activity object
+ * @details Construct the values of activity and create the activity
+ * @author Matthew Temniuk
+ * @param name: The name of the activity
+ * @param user: The user the activity is associated with
+ * @param date: The date the activity was done
+ * @param start: The start time of the activity
+ * @param end: The end time of the activity
+ * @param duration: The time from start to conclusion  of activity
+ * @param distance: The distance traveled on the activity
+ * @param type: The type of activity
+ * @param elevationGain: The elevation gain of the activity
+ * 
  */
 Activity::Activity(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, std::string type, double elevationGain)	{
 	this->name = name;
@@ -38,21 +37,21 @@ Activity::Activity(std::string name, User * user, struct tm date, struct tm star
 	this->caloriesBurnt = 0;
 }
 
-/*
- * Name        : ~Activity
- * Description : Deletion of a Activity object
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Deletion of a Activity object
+ * @details Delete the Activity does nothing special
+ * @author Matthew Temniuk
+ *
  */
 Activity::~Activity()	{
 	
 }
 
-/*
- * Name        : view
- * Description : Prints out information of the activity
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Prints out information of the activity
+ * @details Print to the screen the details of the activity
+ * @author Matthew Temniuk
+ *
  */
 void Activity::view() const	{
 	cout << endl;
@@ -75,11 +74,12 @@ void Activity::view() const	{
 	
 }
 
-/*
- * Name        : saveString
- * Description : Returns a string to use to save for a csv file
- * Parameter(s): N/A
- * Return      : String to use to save activity
+/**
+ * @brief Returns a string to use to save for a csv file
+ * @details Formats the string to be saved into file to keep as storage
+ * @author Matthew Temniuk
+ * @return String to use to save activity
+ *
  */
 string Activity::saveString() const	{
 	string saveString = "";
@@ -91,147 +91,161 @@ string Activity::saveString() const	{
 	saveString += to_string(date.tm_mday) + "," + to_string(date.tm_mon) + "," + to_string(date.tm_year) + ",";
 	saveString += to_string(start.tm_hour) + "," + to_string(start.tm_min) + "," + to_string(end.tm_hour) + "," + to_string(end.tm_min) + ",";
 	saveString += to_string(duration) + "," + to_string(distance) + ",";
-	saveString += to_string(elevationGain) + "," + to_string(caloriesBurnt) + "\n";
+	saveString += to_string(elevationGain) + "\n";
 		
 	return saveString;
 }
 
 
-/*
- * Name        : getName
- * Description : Getter method of the name of activity
- * Parameter(s): N/A
- * Return      : name of activity
+/**
+ * @brief Getter method of the name of activity
+ * @details Getter method of the name of activity
+ * @author Matthew Temniuk
+ * @return name of activity
+ *
  */
 std::string Activity::getName() const	{
 	return name;
 }
 
-/*
- * Name        : getUser
- * Description : Getter method of the user of activity
- * Parameter(s): N/A
- * Return      : Pointer to the user that did this activity
+/**
+ * @brief Getter method of the user of activity
+ * @details Getter method of the user of activity
+ * @author Matthew Temniuk
+ * @return Pointer to the user that did this activity
+ *
  */
 User * Activity::getUser() const	{
 	return user;
 }
 
-/*
- * Name        : getDate
- * Description : Getter method of the date of activity
- * Parameter(s): N/A
- * Return      : struct tm that has the day, month and year of the activity
+/**
+ * @brief Getter method of the date of activity
+ * @details Getter method of the date of activity
+ * @author Matthew Temniuk
+ * @return struct tm that has the day, month and year of the activity
+ *
  */
 struct tm Activity::getDate() const	{
 	return date;
 }
 
-/*
- * Name        : getStart
- * Description : Getter method of the start time of activity
- * Parameter(s): N/A
- * Return      : struct tm that has the starting hour and minute of the activity
+/**
+ * @brief Getter method of the start time of activity
+ * @details Getter method of the start time of activity
+ * @author Matthew Temniuk
+ * @return struct tm that has the starting hour and minute of the activity
+ *
  */
 struct tm Activity::getStart() const	{
 	return start;
 }
 
-/*
- * Name        : getEnd
- * Description : Getter method of the end time of activity
- * Parameter(s): N/A
- * Return      : struct tm that has the ending hour and minute of the activity
+/**
+ * @brief Getter method of the end time of activity
+ * @details Getter method of the end time of activity
+ * @author Matthew Temniuk
+ * @return struct tm that has the ending hour and minute of the activity
+ *
  */
 struct tm Activity::getEnd() const	{
 	return end;
 }
 
-/*
- * Name        : getDuration
- * Description : Getter method of the duration of activity
- * Parameter(s): N/A
- * Return      : duration of the activity
+/**
+ * @brief Getter method of the duration of activity
+ * @details Getter method of the duration of activity
+ * @author Matthew Temniuk
+ * @return duration of the activity
+ *
  */
 int Activity::getDuration() const	{
 	return duration;
 }
 
-/*
- * Name        : getDistance
- * Description : Getter method of the distance of activity
- * Parameter(s): N/A
- * Return      : distance of the activity
+/**
+ * @brief Getter method of the distance of activity
+ * @details Getter method of the distance of activity
+ * @author Matthew Temniuk
+ * @return distance of the activity
+ * 
  */
 double Activity::getDistance() const	{
 	return distance;
 }
 
-/*
- * Name        : getType
- * Description : Getter method of the type of activity
- * Parameter(s): N/A
- * Return      : Type of activity
+/**
+ * @brief Getter method of the type of activity
+ * @details Getter method of the type of activity
+ * @author Matthew Temniuk
+ * @return Type of activity
+ *
  */
 std::string Activity::getType() const	{
 	return type;
 }
 
-/*
- * Name        : getElevationGain
- * Description : Getter method of the elevation gain of activity
- * Parameter(s): N/A
- * Return      : elevation gain of the activity
+/**
+ * @brief Getter method of the elevation gain of activity
+ * @details Getter method of the elevation gain of activity
+ * @author Matthew Temniuk
+ * @return elevation gain of the activity
+ *
  */
 double Activity::getElevationGain() const	{
 	return elevationGain;
 }
 
-/*
- * Name        : setDate
- * Description : Setter method of the date of activity
- * Parameter(s): date: The date to set the activity to
- * Return      : N/A
+/**
+ * @brief Setter method of the date of activity
+ * @details Setter method of the date of activity
+ * @author Matthew Temniuk
+ * @param date: The date to set the activity to
+ * 
  */
 void Activity::setDate(struct tm date)	{
 	this->date = date;
 }
 
-/*
- * Name        : setStart
- * Description : Setter method of the start time of activity
- * Parameter(s): start: The start time to set the activity to
- * Return      : N/A
+/**
+ * @brief Setter method of the start time of activity
+ * @details Setter method of the start time of activity
+ * @author Matthew Temniuk
+ * @param start: The start time to set the activity to
+ * 
  */
 void Activity::setStart(struct tm start)	{
 	this->start = start;
 }
 
-/*
- * Name        : setEnd
- * Description : Setter method of the end time of activity
- * Parameter(s): end: The end time to set the activity to
- * Return      : N/A
+/**
+ * @brief Setter method of the end time of activity
+ * @details Setter method of the end time of activity
+ * @author Matthew Temniuk
+ * @param end: The end time to set the activity to
+ * 
  */
 void Activity::setEnd(struct tm end)	{
 	this->end = end;
 }
 
-/*
- * Name        : setDuration
- * Description : Setter method of the duration of the activity
- * Parameter(s): duration: The duration to set the activity to
- * Return      : N/A
+/**
+ * @brief Setter method of the duration of the activity
+ * @details Setter method of the duration of the activity
+ * @author Matthew Temniuk
+ * @param duration: The duration to set the activity to
+ * 
  */
 void Activity::setDuration(int duration)	{
 	this->duration = duration;
 }
 
-/*
- * Name        : calculateCaloriesBurnt
- * Description : Return the calories brunt by the 
- * Parameter(s): duration: The duration to set the activity to
- * Return      : N/A
+/**
+ * @brief Return the calories brunt by the user
+ * @details Return the calories brunt by the user
+ * @author 
+ * @param duration: The duration to set the activity to
+ * 
  */
 int Activity::calculateCaloriesBurnt(User * user, Activity * activity)	{
 	//To do for later time
