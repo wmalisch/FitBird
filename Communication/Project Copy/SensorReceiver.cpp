@@ -10,6 +10,8 @@
 
 using namespace std;
 
+SensorReceiver * SensorReceiver::_instance = NULL;
+
  /*
  * Name        : instance
  * Description : Get the singleton instance of the SensorReceiver, if one does not exist already create it
@@ -17,10 +19,6 @@ using namespace std;
  * Return      : pointer to the instance of the SensorReceiver
  */
 SensorReceiver * SensorReceiver::instance(){
-    /* ############################################# */
-    /* 
-    
-    /* ############################################# */
     if(_instance == NULL){
         _instance = new SensorReceiver();
     }
