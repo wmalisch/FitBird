@@ -84,8 +84,6 @@ int main(){
             break;
         }
         cout<< "Received: " << string(buffer,0,bytesRecv) << endl;
-        
-        
     }
 
     // Close socket

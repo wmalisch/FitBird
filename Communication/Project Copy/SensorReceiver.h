@@ -14,7 +14,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <string>
-#include <../../Desktop and Data structures/Activity.h>
+//#include <../../'Desktop and Data structures'/Activity.h>
 
 using namespace std;
 
@@ -44,12 +44,12 @@ class SensorReceiver
         static SensorReceiver * _instance;
         int server_socket;
         int client_socket;
-        sockaddr_in serverAddr;
+        sockaddr_in server_addr;
         sockaddr_in client;
-        socklen_t clientSize;
+        socklen_t client_size;
         char buffer[4096];
         int onSwitch;
-        Activity activity;
+        //Activity activity;
 
 };
 

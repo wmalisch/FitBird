@@ -54,6 +54,8 @@ SensorReceiver::SensorReceiver(){
 SensorReceiver::~SensorReceiver(){
     /*
     CODE HERE TO DESTROY ALL VALUES OF THE SENSOR, SO THAT THE NEXT SENSOR STARTS FROM SCRATCH
+    
+    THIS CODE SHOULD DELETE AND CLEAR ALL MEMORY/SPACE USED FOR STORING DATA ACCELEROMETER DATA
     */
 }
 
@@ -71,11 +73,11 @@ int SensorReceiver::sensor_initialize(){
         return -1;
     }
     // Bind the socket to a IP/ port
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = SERVER_PORT;
-    inet_pton(AF_INET, "127.0.0.1", &serverAddr.sin_addr); 
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = SERVER_PORT;
+    inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr); 
 
-    if(bind(server_socket, (struct sockaddr*) &serverAddr, sizeof(struct sockaddr)) == -1){
+    if(bind(server_socket, (struct sockaddr*) &server_addr, sizeof(struct sockaddr)) == -1){
         cerr << "[ERROR] port is currently in use" << endl;
         return -2;
     }
@@ -96,11 +98,28 @@ int SensorReceiver::sensor_initialize(){
 int SensorReceiver::run_sensor(){
 
     // Accept the client
-    clientSize = sizeof(client);
-    client_socket = accept(server_socket, (struct sockaddr*)&client, &clientSize);
-    /*
-    
-    */
+    client_size = sizeof(client);
+    client_socket = accept(server_socket, (struct sockaddr*)&client, &client_size);
+    cout << "accepted" << endl;
+    if(client_socket == -1){
+        cerr << "[ERROR] Was not able to connect to socket" << endl;
+        return -4;
+    }
+    while(true){
+        // clear buffer
+        memset(buffer,0,4096);
+        // wait for a message
+        int bytesRecv = recv(client_socket,buffer,4096,0);
+        if (bytesRecv == -1){
+            cerr << "Connection error";
+            break;
+        }
+        if(bytesRecv==0){
+            cout<<"Client disconnected";
+            break;
+        }
+        cout<< "Received: " << string(buffer,0,bytesRecv) << endl;
+    }
     return client_socket;
 }
 
