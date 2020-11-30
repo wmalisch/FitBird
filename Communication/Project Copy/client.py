@@ -35,9 +35,9 @@ def main():
         while True:
             # Send accelerometer data until receive halt message from SensorReceiver
             x = sense.get_accelerometer_raw()
-            client_socket.send(str(x['x']).encode())
-            client_socket.send(str(x['y']).encode())
-            client_socket.send(str(x['z']).encode())
+            client_socket.send(("x" + str(x['x'])).encode())
+            client_socket.send(("y" + str(x['y'])).encode())
+            client_socket.send(("z" + str(x['z'])).encode())
     
     # Check for broken Connection
     except ConnectionRefusedError:

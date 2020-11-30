@@ -19,9 +19,9 @@ def main():
         client_socket.connect(ADDR)
         while True:
             x = sense.get_accelerometer_raw()
-            client_socket.send(str(x['x']).encode())
-            client_socket.send(str(x['y']).encode())
-            client_socket.send(str(x['z']).encode())
+            client_socket.send(("x" + str(x['x'])).encode())
+            client_socket.send(("y" + str(x['y'])).encode())
+            client_socket.send(("z" + str(x['z'])).encode())
     except ConnectionRefusedError:
         print('Error:  That host or port is not accepting connections.')
         sys.exit(1)
