@@ -1,9 +1,7 @@
-/*
- * Walk.h
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing a Walk activity class
+/**
+ * @brief Header file describing a Walk activity class
+ * @details Header file for declaring the Walk activity class to keep track of walking data and perform algorithms on this data. Subclass of Activity
+ * @author Matthew Temniuk
  *
  */
 #ifndef WALK_H_
@@ -20,6 +18,7 @@ class Walk : public Activity	{
 		Walk(std::string name, User * user, struct tm date, struct tm start, struct tm end, int duration, double distance, int steps, std::string type, double elevationGain);
 		~Walk();
 		void view() const ;
+		std::string saveString() const;
 		int getSteps() const ;
 		void setSteps(int newSteps);
 		

@@ -1,22 +1,23 @@
-/*
- * Facade.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : 
+/**
+ * @brief Facade to hide backend calls from user DesktopMain
+ * @details Facade to hide backend calls from user DesktopMain and provide functionality to the options the user choses
+ * @author Matthew Temniuk
  *
  */
  #include "Facade.h"
+ #define USER_SAVE_FILE "saved_users.csv"
+ #define ACTIVITY_SAVE_FILE "saved_activities.csv"
  
  using namespace std;
 	
  Facade* Facade::_instance = NULL;
  
- /*
- * Name        : instance
- * Description : Get the singleton instance of the facade, if one does not exist already create it
- * Parameter(s): N/A
- * Return      : pointer to the instance of the facade
+/**
+ * @brief Returns instance of the facade
+ * @details Get the singleton instance of the facade, if one does not exist already create it
+ * @author Matthew Temniuk
+ * @return Pointer to the instance of the facade
+ *
  */
 Facade * Facade::instance()	{
 	 if(_instance == NULL)	{
@@ -25,11 +26,12 @@ Facade * Facade::instance()	{
 	 return _instance;
  }
  
- /*
- * Name        : addUser
- * Description : Takes arguments and creates a user if the username is not already taken
- * Parameter(s): arguments: A vector of strings with the arguments to create a user
- * Return      : N/A
+/**
+ * @brief Takes arguments and creates a user if the username is not already taken
+ * @details Takes the arguments and creates a user, adds to users list if username not already taken
+ * @author Matthew Temniuk
+ * @param arguments: A vector of strings with the arguments to create a user
+ * 
  */
 void Facade::addUser(std::vector<std::string>* arguments)	{
 	// command username password age weight(kg) height(cm) sex(M/F)
@@ -46,22 +48,24 @@ void Facade::addUser(std::vector<std::string>* arguments)	{
 	string sex = arguments->at(6);
 	
 	//Check if the user with username already exists
-	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index)).getName())	{
+	for(int index = 0; index < users.size(); index++)	{
+		if(username == (users.at(index))->getName())	{
 			message = "\nUsername taken\n";
 			throw message;
 		}
 	}
 	
 	User * newUser = new User(username, password, age, weight, height, sex);
-	users->push_back(*newUser);
+	users.push_back(newUser);
 }
 
-/*
- * Name        : login
- * Description : Takes arguments and tries to login as the user
- * Parameter(s): arguments: A vector of strings with the arguments to login as a user
- * Return      : The user with the username and password if login succesful, else a string exception
+/**
+ * @brief Takes arguments and tries to login as the user
+ * @details Takes arguments from user and attempts to login throws string exception if something goes wrong (wrong username/pass)
+ * @author Matthew Temniuk
+ * @param arguments: A vector of strings with the arguments to login as a user
+ * @return The user with the username and password if login succesful, else a string exception
+ *
  */
 User * Facade::login(std::vector<std::string>* arguments)	{
 	string message;
@@ -75,10 +79,10 @@ User * Facade::login(std::vector<std::string>* arguments)	{
 	string username = arguments->at(1);
 	string password = arguments->at(2);
 	
-	for(int index = 0; index < users->size(); index++)	{
-		if(username == (users->at(index)).getName())	{
-			if((users->at(index)).verify(password))	{
-				return &(users->at(index));
+	for(int index = 0; index < users.size(); index++)	{
+		if(username == (users.at(index))->getName())	{
+			if((users.at(index))->verify(password))	{
+				return users.at(index);
 				
 			}else	{
 				message = "\nIncorrect Password!\n";
@@ -92,13 +96,16 @@ User * Facade::login(std::vector<std::string>* arguments)	{
 	throw message;
 }
 
-/*
- * Name        : getArguments
- * Description : Take the arguments from the line and put in a vector
- * Parameter(s): command: string that has the command line text
- * Return      : Pointer to a vector of strings that are split into seperate arguments
+/**
+ * @brief Take the arguments from the line and put in a vector
+ * @details Takes the arguments from a string and uses separator to separate the values into vector
+ * @author Matthew Temniuk
+ * @param command: string that has the command line text
+ * @param separator: The character to use to separate arguments
+ * @return Pointer to a vector of strings that are split into seperate arguments
+ *
  */
-std::vector<std::string> * Facade::getArguments(string command)	{
+std::vector<std::string> * Facade::getArguments(string command, const char separator)	{
 	//Constants to tell what state the char running through the line is in
 	const int NON_QUOTED = 0;
 	const int QUOTED = 1;
@@ -117,7 +124,7 @@ std::vector<std::string> * Facade::getArguments(string command)	{
 				//Reset argument to take in the string of the next argument
 				currentArgument.clear();
 				break;
-			}else if(character == ' ')	{ 
+			}else if(character == separator)	{ 
 				//End of field, push on the arguments the string
 				if(currentArgument == "")	{
 					//The argument is empty
@@ -156,11 +163,12 @@ std::vector<std::string> * Facade::getArguments(string command)	{
 	return container;
 }
 
-/*
- * Name        : showPastActivities
- * Description : Prints out all the activities of the user
- * Parameter(s): user: The user to show all activities
- * Return      : N/A
+/**
+ * @brief Prints out all the activities of the user
+ * @details Prints out the formatted strings for each activity associated with the user
+ * @author Matthew Temniuk
+ * @param user: The user to show all activities
+ * 
  */
 void Facade::showPastActivities(User * user)	{
 	if(user != NULL)	{
@@ -172,12 +180,13 @@ void Facade::showPastActivities(User * user)	{
 	}
 }
 
-/*
- * Name        : addActivity
- * Description : Takes arguments and tries to add an activity to the user
- * Parameter(s): user: The user to add the activity to
-				 arguments: A vector of strings with the arguments to add an activity
- * Return      : N/A
+/**
+ * @brief Takes arguments and tries to add an activity to the user
+ * @details Takes the arguments and adds the activity to the user able to do auto current date or entered date
+ * @author Matthew Temniuk
+ * @param user: The user to add the activity to
+ * @param arguments: A vector of strings with the arguments to add an activity
+ * 
  */
 void Facade::addActivity(User * user, vector<string>* arguments)	{
 	string message;
@@ -285,21 +294,25 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 	
 }
 
-/*
- * Name        : showProgress
- * Description : Takes the user and shows their progress 
- * Parameter(s): user: The user to view their progress of
- * Return      : N/A
+/**
+ * @brief Takes the user and shows their progress 
+ * @details Shows the progress of the user and show their progress ordered by user input_iterator
+ * @author 
+ * @param user: The user to view their progress of
+ * @param arguments: List of arguments entered by the user
+ * 
  */
-void Facade::showProgress(User * user)	{
+void Facade::showProgress(User * user, vector<string>* arguments)	{
+	//Get sortBy string
 	//user->showProgress();
 }
 
-/*
- * Name        : viewProfile
- * Description : Takes arguments and displays profile information
- * Parameter(s): user: The user to view information on
- * Return      : N/A
+/**
+ * @brief Takes arguments and displays profile information
+ * @details Displays the users profile and all that users data
+ * @author Matthew Temniuk
+ * @param user: The user to view information on
+ *
  */
 void Facade::viewProfile(User * user)	{
 	if(user != NULL)	{
@@ -310,12 +323,13 @@ void Facade::viewProfile(User * user)	{
 	}
 }
 
-/*
- * Name        : removeActivity
- * Description : Takes arguments and tries to delete the activity from the user
- * Parameter(s): user: The user to remove the activity from
-				 arguments: A vector of strings with the arguments to remove an activity
- * Return      : N/A
+/**
+ * @brief Takes arguments and tries to delete the activity from the user
+ * @details Takes the arguments and user and removes the activity given by date and name
+ * @author Matthew Temniuk
+ * @param user: The user to remove the activity from
+ * @param arguments: A vector of strings with the arguments to remove an activity
+ * 
  */
 void Facade::removeActivity(User * user, vector<string>* arguments)	{
 	string message;
@@ -338,12 +352,13 @@ void Facade::removeActivity(User * user, vector<string>* arguments)	{
 	}
 }
 
-/*
- * Name        : setStepGoal
- * Description : Takes arguments and changes the step goal of the user
- * Parameter(s): user: user to update data on
-				 arguments: A vector of strings with the arguments to change weight to
- * Return      : N/A
+/**
+ * @brief Takes arguments and changes the step goal of the user
+ * @details Updates the users step goal to the inputted value
+ * @author Matthew Temniuk
+ * @param user: user to update data on
+ * @param arguments: A vector of strings with the arguments to change weight to
+ * 
  */
 void Facade::setStepGoal(User * user, vector<string>* arguments)	{
 	string message;
@@ -361,11 +376,12 @@ void Facade::setStepGoal(User * user, vector<string>* arguments)	{
 	}
 }
 
-/*
- * Name        : removeStepGoal
- * Description : Takes the user and removes their step goal
- * Parameter(s): user: user to remove step goal from
- * Return      : N/A
+/**
+ * @brief Takes the user and removes their step goal
+ * @details Sets the step goal back to the default of 0
+ * @author Matthew Temniuk
+ * @param user: user to remove step goal from
+ * 
  */
 void Facade::removeStepGoal(User * user)	{
 	if(user != NULL)	{
@@ -377,12 +393,13 @@ void Facade::removeStepGoal(User * user)	{
 	
 }
 
-/*
- * Name        : updateWeight
- * Description : Takes arguments and changes the weight of the user
- * Parameter(s): user: user to update data on
-				 arguments: A vector of strings with the arguments to change weight to
- * Return      : N/A
+/**
+ * @brief Takes arguments and changes the weight of the user
+ * @details Updates the user's weight to new value specified
+ * @author Matthew Temniuk
+ * @param user: user to update data on
+ * @param arguments: A vector of strings with the arguments to change weight to
+ * 
  */
 void Facade::updateWeight(User * user, vector<string>* arguments)	{
 	string message;
@@ -400,12 +417,13 @@ void Facade::updateWeight(User * user, vector<string>* arguments)	{
 	}
 }
 
-/*
- * Name        : updateHeight
- * Description : Takes arguments and changes the height of the user
- * Parameter(s): user: user to update data on
-				 arguments: A vector of strings with the arguments to change height to
- * Return      : N/A
+/**
+ * @brief Takes arguments and changes the height of the user
+ * @details Changes the height of the user to the new value
+ * @author Matthew Temniuk
+ * @param user: user to update data on
+ * @param arguments: A vector of strings with the arguments to change height to
+ * 
  */
 void Facade::updateHeight(User * user, vector<string>* arguments)	{
 	string message;
@@ -423,12 +441,13 @@ void Facade::updateHeight(User * user, vector<string>* arguments)	{
 	}
 }
 
-/*
- * Name        : updateAge
- * Description : Takes arguments and changes the age of the user
- * Parameter(s): user: user to update data on
-				 arguments: A vector of strings with the arguments to change age to
- * Return      : N/A
+/**
+ * @brief Takes arguments and changes the age of the user
+ * @details Updates the age of the user to the new value
+ * @author Matthew Temniuk
+ * @param user: user to update data on
+ * @param arguments: A vector of strings with the arguments to change age to
+ * 
  */
 void Facade::updateAge(User * user, vector<string>* arguments)	{
 	string message;
@@ -446,43 +465,153 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
 	}
 }
 
-/*
- * Name        : load
- * Description : Loads the saved data into users and their activities
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Loads the saved data into users and their activities
+ * @details Tries to read from the file and insert these values into the system that was held over
+ * @author Matthew Temniuk
+ * 
  */
 void Facade::load()	{
-	//To do Later
+	const char separator = ',';
+	//Files to read saved data from
+	ifstream userSaveFile(USER_SAVE_FILE);
+	ifstream activitySaveFile(ACTIVITY_SAVE_FILE);
+	//Line from file
+	string line;
+	
+	if(userSaveFile.is_open() && activitySaveFile.is_open())	{
+		//Load in the users
+		while(getline(userSaveFile, line))	{
+			//Values from the line in file
+			vector<string> * values = getArguments(line, separator);
+			string name = values->at(0);
+			string pass = values->at(1);
+			string sex = values->at(2);
+			int age = stoi(values->at(3));
+			int weight = stoi(values->at(4));
+			int height = stoi(values->at(5));
+			int stepGoal = stoi(values->at(6));
+			
+			//Create User with data
+			User * newUser = new User(name, pass, age, weight, height, sex);
+			newUser->setStepGoal(stepGoal);
+			//Put user in list of users
+			users.push_back(newUser);
+			//delete current values vector
+			delete values;
+		}
+		
+		//Each users activities are grouped together in order saved in user save file so can loop through activities and put them in correct user
+		int userIndex = 0;
+		while(getline(activitySaveFile, line))	{
+			//Values from the line in file
+			vector<string> * values = getArguments(line, separator);
+			string userName = values->at(0);
+			string type = values->at(1);
+			string activityName = values->at(2);
+			int day = stoi(values->at(3));
+			int month = stoi(values->at(4));
+			int year = stoi(values->at(5));
+			int startHour = stoi(values->at(6));
+			int startMin = stoi(values->at(7));
+			int endHour = stoi(values->at(8));
+			int endMin = stoi(values->at(9));
+			int duration = stoi(values->at(10));
+			double distance = stod(values->at(11));
+			double elevationGain = stod(values->at(12));
+			
+			tm  date;
+			date.tm_mday = day;
+			date.tm_mon = month;
+			date.tm_year = year;
+			
+			tm start;
+			start.tm_hour = startHour;
+			start.tm_min = startMin;
+			
+			tm end;
+			end.tm_hour = endHour;
+			end.tm_min = endMin;
+			
+			User * currentUser = users.at(userIndex);
+			//Check if it is the next user and loop until it is the correct User
+			while(userName != currentUser->getName())	{
+				//Not the current user so get the next user as this is the first activity for the next user
+				currentUser = users.at(++userIndex);
+			}
+			
+			//Check what type it is
+			if(type == "Walk")	{
+				int steps = stoi(values->at(13));
+				
+				Walk * walk = new Walk(activityName, currentUser, date, start, end, duration, distance, steps, type, elevationGain);
+				currentUser->addActivity(walk);
+				
+			}
+			//Delete vector for current line
+			delete values;
+		}
+	}
 }
 
-/*
- * Name        : save
- * Description : Saves teh data in users and their activities
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Saves the data in users and their activities
+ * @details Saves the data in users and their activities into a designated file for user and activities
+ * @author Matthew Temniuk
+ *
  */
 void Facade::save()	{
-	//To do Later
+	ofstream userSaveFile(USER_SAVE_FILE);
+	ofstream activitySaveFile(ACTIVITY_SAVE_FILE);
+	
+	
+	if(userSaveFile.is_open() && activitySaveFile.is_open())	{
+		//Go through each user
+		for(int index = 0; index < users.size(); index++)	{
+			User * currentUser = users.at(index);
+			
+			vector<Activity *> usersAct = currentUser->getActivities();
+			//Go through the user's activities
+			for(int index = 0; index < usersAct.size(); index++)	{
+				//Write activity to file
+				activitySaveFile << (usersAct.at(index))->saveString();
+			}
+			
+			//Write user to file
+			userSaveFile <<	currentUser->saveString();
+			
+		}
+		
+		activitySaveFile.close();
+		userSaveFile.close();
+		
+	}else{
+		cout << endl << "Unable to open files to save to" << endl;
+	}
 }
 
-/*
- * Name        : ~Facade
- * Description : Deletion of Facade that deletes the Facade object
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Deletion of Facade that deletes the Facade object
+ * @details Deletion of Facade that deletes the facade object and deletes every user in the users list
+ * @author Matthew Temniuk
+ *
  */
 Facade::~Facade()	{
-	delete users;
+	//Delete users created
+	for(int index = 0; index < users.size(); index++)	{
+		User * user = users.at(index);
+		delete user;
+	}
+	
 }
 
-/*
- * Name        : Facade
- * Description : Protected constructor that creates the one singleton object when it does not already exist
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief Protected constructor that creates the one singleton object when it does not already exist
+ * @details Protected constructor that creates the instance of the Facade for the user to user
+ * @author Matthew Temniuk
+ *
  */
 Facade::Facade()	{
-	 users = new vector<User>();
+	 
 }
  

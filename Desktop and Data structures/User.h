@@ -1,9 +1,7 @@
-/*
- * Facade.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 3, 2020
- *	Description    : Header file describing the class for the user to store data and perform methods on the data
+/**
+ * @brief Header file describing the class for the user to store data and perform methods on the data
+ * @details Header file describing the class for the user to store data for fitness data and keep track of activities
+ * @author Matthew Temniuk
  *
  */
  
@@ -22,7 +20,8 @@ class User	{
 		~User();
 		bool verify(std::string) const ;
 		void view() const ;
-		//void showProgress();
+		std::string saveString() const ;
+		void showProgress(std::string orderedBy);
 		void showActivities() const ;
 		void addActivity(Activity *) ;
 		void removeActivity(std::string name, int day, int month, int year);
@@ -31,6 +30,7 @@ class User	{
 		int getWeight() const ;
 		int getHeight() const ;
 		std::string getSex() const ;
+		std::vector<Activity *> getActivities() const;
 		int getStepGoal() const ;
 		void setAge(int newAge);
 		void setWeight(int newWeight);
@@ -46,7 +46,7 @@ class User	{
 		int height;
 		std::string sex;
 		int stepGoal;
-		std::vector<Activity *> * activities;
+		std::vector<Activity *> activities;
 		
 		
 	
