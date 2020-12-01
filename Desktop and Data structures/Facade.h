@@ -16,6 +16,8 @@
 #include "User.h"
 #include "Activity.h"
 #include "Walk.h"
+#include "../Communication/Project Copy/SensorReceiver.h"
+
 class User;
 class Facade	{
 	public:
@@ -33,6 +35,7 @@ class Facade	{
 		void updateWeight(User * user, std::vector<std::string>* arguments);
 		void updateHeight(User * user, std::vector<std::string>* arguments);
 		void updateAge(User * user, std::vector<std::string>* arguments);
+		void recordActivity(User * user, std::vector<std::string>* arguments);
 		void load();
 		void save();
 		~Facade();

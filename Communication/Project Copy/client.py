@@ -32,13 +32,21 @@ def main():
         # Connect to c++ SensorReceiver through sockets
         client_socket = socket(AF_INET, SOCK_STREAM)
         client_socket.connect(ADDR)
-        while True:
-            # Send accelerometer data until receive halt message from SensorReceiver
-            x = sense.get_accelerometer_raw()
-            client_socket.send(("x" + str(x['x'])).encode())
-            client_socket.send(("y" + str(x['y'])).encode())
-            client_socket.send(("z" + str(x['z'])).encode())
-    
+        f = open("data.csv", "w")
+        try:
+            while True:
+                # Send accelerometer data until receive halt message from SensorReceiver
+                x = sense.get_accelerometer_raw()
+                f.write(("x" + str(x['x'])))
+                f.write(("y" + str(x['y'])))
+                f.write(("z" + str(x['z'])))
+                f.write('\n')
+                client_socket.send(("x" + str(x['x'])).encode())
+                client_socket.send(("y" + str(x['y'])).encode())
+                client_socket.send(("z" + str(x['z'])).encode())
+        except KeyboardInterrupt:
+            f.close()
+            pass
     # Check for broken Connection
     except ConnectionRefusedError:
         print('Error:  That host or port is not accepting connections.')

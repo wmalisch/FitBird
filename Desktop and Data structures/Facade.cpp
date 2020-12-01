@@ -465,6 +465,17 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
 	}
 }
 
+void Facade::recordActivity(User * user, vector<string>* arguments){
+	string message;
+	if(user != NULL)	{
+		
+		
+	}else	{
+		string message = "\nNot logged in\n";
+		throw message;
+	}
+}
+
 /**
  * @brief Loads the saved data into users and their activities
  * @details Tries to read from the file and insert these values into the system that was held over

@@ -52,11 +52,7 @@ SensorReceiver::SensorReceiver(){
  * Return      : Destroys SensorReceiver Object
 */
 SensorReceiver::~SensorReceiver(){
-    /*
-    CODE HERE TO DESTROY ALL VALUES OF THE SENSOR, SO THAT THE NEXT SENSOR STARTS FROM SCRATCH
-    
-    THIS CODE SHOULD DELETE AND CLEAR ALL MEMORY/SPACE USED FOR STORING DATA ACCELEROMETER DATA
-    */
+    /* Destroy data and memory allocated for acceleromter for this instance of the sensor */
 }
 
  /*
@@ -67,6 +63,7 @@ SensorReceiver::~SensorReceiver(){
  */
 int SensorReceiver::sensor_initialize(){
     // Create a scoket
+    cout << "[INITIALIZING] Sensor is being set up to receive messages ..." << endl;
     server_socket = socket(AF_INET,SOCK_STREAM,0);
     if(server_socket == -1){
         cerr << "Error creating socket" << endl;
@@ -83,9 +80,10 @@ int SensorReceiver::sensor_initialize(){
     }
     // Mark the socket for listening in
     if(listen(server_socket, SOMAXCONN) == -1){
+        cerr << "[ERROR] port is currently unable to listen to messages" << endl;
         return -3;
     }
-
+    cout << "[WAITING] Sensor has been initialized. Run when ready by calling the run_sensor function." << endl;
     return 1;
 }
 
@@ -99,12 +97,15 @@ int SensorReceiver::run_sensor(){
 
     // Accept the client
     client_size = sizeof(client);
+    cout << "[WAITING] Run function called. Waiting to for message from client ... ";
     client_socket = accept(server_socket, (struct sockaddr*)&client, &client_size);
     cout << "accepted" << endl;
     if(client_socket == -1){
         cerr << "[ERROR] Was not able to connect to socket" << endl;
         return -4;
     }
+    cout << "[RUNNING] Server has accepted client and will not receive data ..." << endl;
+
     while(true){
         // clear buffer
         memset(buffer,0,4096);

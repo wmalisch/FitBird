@@ -30,8 +30,8 @@ int main(int argc, char *argv[]){
 	cout << "  quit" << endl;
 	cout << "Commands upon login:" << endl;
 	cout << "  showPastActivities" << endl;
-	cout << "  addActivity 'name' day(int) month(int) year(int) startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
-	cout << "  addActivity 'name' startHour startMin endHour endMin duration(min) distance type elevationGain" << endl; 
+	cout << "  addActivity 'name' day(int) month(int) year(int) startHour startMin endHour endMin duration(min) distance type(Walk) elevationGain(double)" << endl; 
+	cout << "  addActivity 'name' startHour startMin endHour endMin duration(min) distance(double) type(string) elevationGain" << endl; 
 	cout << "  showProgress OrderBy (once logged in)" << endl;
 	cout << "  viewProfile (once logged in)" << endl;
 	cout << "  removeActivity 'name' day month year" << endl;
@@ -40,7 +40,8 @@ int main(int argc, char *argv[]){
 	cout << "  updateWeight weight(kg)" << endl;
 	cout << "  updateHeight height(cm)" << endl;
 	cout << "  updateAge age" << endl;
-	//Add any needed extra functions
+	cout << "  recordActivity" << endl;
+
 	cout << "*******************************************************************************************************************************" << endl;
 	//Separator for the commands
 	const char separator = ' ';
@@ -115,6 +116,9 @@ int main(int argc, char *argv[]){
 			}else if(command == "updateAge")	{
 				instance->updateAge(currentUser, arguments);
 				
+			}else if(command == "recordActivity"){
+				instance->recordActivity(currentUser, arguments);
+
 			}else if(command == "quit")	{
 				quit = true;
 			}else	{
