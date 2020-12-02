@@ -61,7 +61,7 @@ SensorReceiver::~SensorReceiver(){
  */
 int SensorReceiver::sensor_initialize(){
     // Create a scoket
-    cout << "[INITIALIZING] Sensor is being set up to receive messages ..." << endl;
+    cout << "[INITIALIZING] Sensor is being set up to receive messages ...\n" << endl;
     server_socket = socket(AF_INET,SOCK_STREAM,0);
     if(server_socket == -1){
         cerr << "Error creating socket" << endl;
@@ -81,7 +81,7 @@ int SensorReceiver::sensor_initialize(){
         cerr << "[ERROR] port is currently unable to listen to messages" << endl;
         return -3;
     }
-    cout << "[WAITING] Sensor has been initialized. Run when ready by calling the run_sensor function." << endl;
+    cout << "[WAITING] Sensor has been initialized. Run when ready by calling the run_sensor function.\n" << endl;
     return 1;
 }
 
@@ -92,47 +92,75 @@ int SensorReceiver::sensor_initialize(){
  * Return      : integer representing client_socket
  */
 int SensorReceiver::run_sensor(){
-    // Use this ch to check if the user enters anything while in this thread/function call
-    std::string ch;
+    // Use the variables below to convert messages into doubles, once you enter the receiving while loop
+    std::stringstream curr;
+    std::string xsd;
+    std::string ysd;
+    std::string zsd;
+    std::string::size_type sz;
 
     // Accept the client
     client_size = sizeof(client);
-    cout << "[WAITING] Run sensor function called. Waiting to for message from client ... " << endl;
-    cout << "SERVER SOCKET: " << server_socket << endl;
-    cout << client_size << endl;
-    // If they click enter, end
-    // getline(cin, ch);
-    // if(ch.empty()) return -1;
+    cout << "[WAITING] Run sensor function called. Waiting to for message from client ... \n" << endl;
+
     client_socket = accept(server_socket, (struct sockaddr*)&client, &client_size);
-    cout << "accepted" << endl;
     if(client_socket == -1){
-        cerr << "[ERROR] Was not able to connect to socket" << endl;
+        cerr << "[ERROR] Was not able to connect to socket. Press Ctrl-C to return to menu." << endl;
         return -4;
     }
     cout << "[RUNNING] Server has accepted client and will not receive data ..." << endl;
     int i = 1;
     
     while(true){
-        // cout << ">> ";
-        // getline(std::cin, ch);
-        // if(ch.empty()) break;
-        // clear buffer
+        
+
+        // Clear memory
+        xsd = "";
+        ysd = "";
+        zsd = "";
         memset(buffer,0,4096);
-        // wait for a message
+
+        // Wait for a message
         int bytesRecv = recv(client_socket,buffer,4096,0);
         if (bytesRecv == -1){
             cerr << "Connection error";
             break;
         }
         if(bytesRecv==0){
-            cout<<"Client disconnected";
+            cout<<"Client disconnected" << endl;
             break;
         }
-        cout << i << endl;
-        cout<< "Received: " << string(buffer,0,bytesRecv) << endl;
-        i++;
+        curr << string(buffer,0,bytesRecv);
+        char x=curr.get();
+        while(x!=' '){
+            xsd+=x;
+            x=curr.get();
+        }
+        x=curr.get();
+        while(x!=' '){
+            ysd+=x;
+            x=curr.get(); 
+        }
+        x=curr.get();
+        while(x!='/'){
+            zsd+=x;
+            x=curr.get(); 
+        }
+        double xd = std::stod(xsd.c_str());
+        double yd = std::stod(ysd.c_str());
+        double zd = std::stod(zsd.c_str());
+        xvector.push_back(xd);
+        yvector.push_back(yd);
+        zvector.push_back(zd);
     }
     return client_socket;
+}
+
+void SensorReceiver::calculateSteps(){
+    for ( int i = 0; i < yvector.size(); i++){
+        std::cout << yvector[i] << std::endl;
+    }
+
 }
 
  /*
@@ -158,3 +186,16 @@ int SensorReceiver::getSwitch() const{
 void SensorReceiver::setSwitch(int n){
     onSwitch = n;
 }
+
+
+
+
+
+ // cout << ">> ";
+// getline(std::cin, ch);
+// if(ch.empty()) break;
+// clear buffer
+
+// If they click enter, end
+// getline(cin, ch);
+// if(ch.empty()) return -1;

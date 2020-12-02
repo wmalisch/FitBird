@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <unistd.h>
-#include <python3.7/Python.h>
+// #include <python3.7/Python.h>
 
 class PythonSensor{
     public:

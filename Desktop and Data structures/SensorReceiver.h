@@ -22,8 +22,9 @@ using namespace std;
 #include <string.h>
 #include <thread>
 #include <string>
-#include <typeinfo>
-//#include <../../'Desktop and Data structures'/Activity.h>
+#include <vector>
+#include <sstream>
+#include "Activity.h"
 
 class SensorReceiver
 {
@@ -41,10 +42,14 @@ class SensorReceiver
         // Getters and setters required so far
         int getSwitch() const;
         void setSwitch(int n);
+        void calculateSteps();
 
     protected:
         SensorReceiver();
     private:
+        vector<double> xvector;
+        vector<double> yvector;
+        vector<double> zvector;
         static SensorReceiver * _instance;
         int server_socket;
         int client_socket;

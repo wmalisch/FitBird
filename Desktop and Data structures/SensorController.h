@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <signal.h>
-#include "../Communication/Project Copy/SensorReceiver.h"
+#include "SensorReceiver.h"
 #include "PythonSensor.h"
 
 class SensorController {

@@ -33,18 +33,11 @@ def main():
         # Connect to c++ SensorReceiver through sockets
         client_socket = socket(AF_INET, SOCK_STREAM)
         client_socket.connect(ADDR)
-        # f = open("data.csv", "w")
         try:
             while True:
                 # Send accelerometer data until receive halt message from SensorReceiver
                 data = sense.get_accelerometer_raw()
-                # f.write(("x" + str(x['x'])))
-                # f.write(("y" + str(x['y'])))
-                # f.write(("z" + str(x['z'])))
-                # f.write('\n')
-                client_socket.send(str(round(data['x'],4)).encode())
-                client_socket.send(str(round(data['y'],4)).encode()) 
-                client_socket.send(str(round(data['z'],4)).encode())
+                client_socket.send((str(round(data['x'],3)) + ' ' + str(round(data['y'],3)) + ' ' + str(round(data['z'],3)) + '/').encode())
                 sleep(0.08)
         except KeyboardInterrupt:
             # f.close()

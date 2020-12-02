@@ -471,6 +471,7 @@ void Facade::recordActivity(User * user, vector<string>* arguments){
 	if(user != NULL)	{
 		SensorController * controller = new SensorController(); 
 		controller->record();
+		delete controller;
 	}else{
 		string message = "\nNot logged in\n";
 		throw message;
