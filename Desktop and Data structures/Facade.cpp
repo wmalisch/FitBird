@@ -466,11 +466,12 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
 }
 
 void Facade::recordActivity(User * user, vector<string>* arguments){
+	
 	string message;
 	if(user != NULL)	{
-		
-		
-	}else	{
+		SensorController * controller = new SensorController(); 
+		controller->record();
+	}else{
 		string message = "\nNot logged in\n";
 		throw message;
 	}
@@ -616,6 +617,7 @@ Facade::~Facade()	{
 	
 }
 
+
 /**
  * @brief Protected constructor that creates the one singleton object when it does not already exist
  * @details Protected constructor that creates the instance of the Facade for the user to user
@@ -623,6 +625,6 @@ Facade::~Facade()	{
  *
  */
 Facade::Facade()	{
-	 
+
 }
  

@@ -16,7 +16,7 @@
 #include "User.h"
 #include "Activity.h"
 #include "Walk.h"
-#include "../Communication/Project Copy/SensorReceiver.h"
+#include "SensorController.h"
 
 class User;
 class Facade	{

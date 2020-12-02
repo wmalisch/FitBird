@@ -6,6 +6,13 @@
  *	Description    : This is the header file outlining the functions and methods of the SensorReceiver class
  *
  */
+
+using namespace std;
+
+#ifndef SENSORRECEIVER_H
+#define SENSORRECEIVER_H
+#define SERVER_PORT htons(5050)
+
 #include <iostream>
 #include <sys/types.h>
 #include <unistd.h>
@@ -13,14 +20,10 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <thread>
 #include <string>
+#include <typeinfo>
 //#include <../../'Desktop and Data structures'/Activity.h>
-
-using namespace std;
-
-#ifndef SENSORRECEIVER_H
-#define SENSORRECEIVER_H
-#define SERVER_PORT htons(5050)
 
 class SensorReceiver
 {
@@ -37,6 +40,7 @@ class SensorReceiver
 
         // Getters and setters required so far
         int getSwitch() const;
+        void setSwitch(int n);
 
     protected:
         SensorReceiver();

@@ -22,8 +22,7 @@ SensorReceiver * SensorReceiver::instance(){
     if(_instance == NULL){
         _instance = new SensorReceiver();
     }
-    return _instance;
-    
+    return _instance;   
 }
 
  /*
@@ -41,8 +40,7 @@ SensorReceiver * SensorReceiver::instance(){
  *              into an Activity object when done. 
 */
 SensorReceiver::SensorReceiver(){
-    onSwitch = sensor_initialize();
-    client_socket = run_sensor();
+    
 }
 
  /*
@@ -94,10 +92,17 @@ int SensorReceiver::sensor_initialize(){
  * Return      : integer representing client_socket
  */
 int SensorReceiver::run_sensor(){
+    // Use this ch to check if the user enters anything while in this thread/function call
+    std::string ch;
 
     // Accept the client
     client_size = sizeof(client);
-    cout << "[WAITING] Run function called. Waiting to for message from client ... ";
+    cout << "[WAITING] Run sensor function called. Waiting to for message from client ... " << endl;
+    cout << "SERVER SOCKET: " << server_socket << endl;
+    cout << client_size << endl;
+    // If they click enter, end
+    // getline(cin, ch);
+    // if(ch.empty()) return -1;
     client_socket = accept(server_socket, (struct sockaddr*)&client, &client_size);
     cout << "accepted" << endl;
     if(client_socket == -1){
@@ -105,8 +110,12 @@ int SensorReceiver::run_sensor(){
         return -4;
     }
     cout << "[RUNNING] Server has accepted client and will not receive data ..." << endl;
-
+    int i = 1;
+    
     while(true){
+        // cout << ">> ";
+        // getline(std::cin, ch);
+        // if(ch.empty()) break;
         // clear buffer
         memset(buffer,0,4096);
         // wait for a message
@@ -119,7 +128,9 @@ int SensorReceiver::run_sensor(){
             cout<<"Client disconnected";
             break;
         }
+        cout << i << endl;
         cout<< "Received: " << string(buffer,0,bytesRecv) << endl;
+        i++;
     }
     return client_socket;
 }
@@ -142,4 +153,8 @@ void SensorReceiver::end_sensor(){
  */
 int SensorReceiver::getSwitch() const{
     return onSwitch;
+}
+
+void SensorReceiver::setSwitch(int n){
+    onSwitch = n;
 }

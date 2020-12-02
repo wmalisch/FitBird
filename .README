@@ -25,6 +25,7 @@ because almost 50% of our time was spent researching and understanding:
 To compile:
     cd 'Desktop and Data structures'
     g++ -o main DesktopMain.cpp User.cpp Activity.cpp Walk.cpp Facade.cpp
+    g++ -o main DesktopMain.cpp Activity.cpp Walk.cpp Facade.cpp ../Community/'Project Copy'/SensorReceiver.cpp SensorController.cpp PythonSensor.cpp -std=c++11 -pthread
 To run:
     ./main
 

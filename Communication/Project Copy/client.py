@@ -6,6 +6,7 @@
 #	Description    : 
 #
 from socket import *
+from time import sleep
 # sense_emu is the sensehat emulator package that comes with the raspberry pi for prototyping and
 # and development without the actual sensehat hardware. However we do have a sense hat on the way, and once
 # received, we will continue the next steps, which include, sensing orientation in the users pocket,
@@ -32,20 +33,21 @@ def main():
         # Connect to c++ SensorReceiver through sockets
         client_socket = socket(AF_INET, SOCK_STREAM)
         client_socket.connect(ADDR)
-        f = open("data.csv", "w")
+        # f = open("data.csv", "w")
         try:
             while True:
                 # Send accelerometer data until receive halt message from SensorReceiver
-                x = sense.get_accelerometer_raw()
-                f.write(("x" + str(x['x'])))
-                f.write(("y" + str(x['y'])))
-                f.write(("z" + str(x['z'])))
-                f.write('\n')
-                client_socket.send(("x" + str(x['x'])).encode())
-                client_socket.send(("y" + str(x['y'])).encode())
-                client_socket.send(("z" + str(x['z'])).encode())
+                data = sense.get_accelerometer_raw()
+                # f.write(("x" + str(x['x'])))
+                # f.write(("y" + str(x['y'])))
+                # f.write(("z" + str(x['z'])))
+                # f.write('\n')
+                client_socket.send(str(round(data['x'],4)).encode())
+                client_socket.send(str(round(data['y'],4)).encode()) 
+                client_socket.send(str(round(data['z'],4)).encode())
+                sleep(0.08)
         except KeyboardInterrupt:
-            f.close()
+            # f.close()
             pass
     # Check for broken Connection
     except ConnectionRefusedError:

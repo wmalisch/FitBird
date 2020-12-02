@@ -8,12 +8,14 @@
  */
 #include "./SensorReceiver.h"
 #include <iostream>
-#include <stdlib.h>
+// #include <stdlib.h>
 // #include <python3.7m/Python.h>
 
 int main(){
     cout << "[MAIN TESTING PROGRAM]" << endl;
     SensorReceiver * instance = SensorReceiver::instance();
+    instance->sensor_initialize();
+    instance->run_sensor();
     string file = "/media/sf_3307CS/Project/proj/Communication/'Project Copy'/client.py";
     string command = "python3 ";
     command += file;
