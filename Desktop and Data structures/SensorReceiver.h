@@ -1,9 +1,7 @@
-/*
- * main.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 11, 2020
- *	Description    : This is the header file outlining the functions and methods of the SensorReceiver class
+/**
+ * @brief Header file for the SensorReceiver class 
+ * @details This goes over all the functions and declartations for SensorReceiver
+ * @author Will Malisch
  *
  */
 
@@ -30,16 +28,10 @@ class SensorReceiver
 {
     public:
         static SensorReceiver * instance();
-        
-        // Destructor
         ~SensorReceiver();
-        
-        // Sensor connection
         int sensor_initialize();
         int run_sensor();
         void end_sensor();
-
-        // Getters and setters required so far
         int getSwitch() const;
         void setSwitch(int n);
         void calculateSteps();
@@ -60,7 +52,6 @@ class SensorReceiver
         char buffer[4096];
         int onSwitch;
         int steps;
-        //Activity activity;
 
 };
 

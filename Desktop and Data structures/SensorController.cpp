@@ -1,10 +1,32 @@
+/**
+ * @brief SensorController class is used to controll all sensor related objects. 
+ * @details SensorController acts as a facade but just for the sensor related objects. It runs threads for each process, as a way to implement multiprocessing, therefore running both the server and client from one program.
+ * @author Will Malisch
+ *
+ */
+
 #include "./SensorController.h"
 
+/**
+ * @brief Constructor
+ * @details Creates instances of SensorReceiver and PythonSensor
+ * @author Will Malisch
+ * @param N/A
+ * @return N/A
+ *
+ */
 SensorController::SensorController(){
     receiver_instance = SensorReceiver::instance();
     python_instance = PythonSensor::instance();
 }
-
+/**
+ * @brief Record is the main function responsible for recording activity
+ * @details Record tracks the duration, runs the threads for sending and receiving sensor data, and finishes off by creating an activity vector to be passed to the facade
+ * @author Will Malisch
+ * @param N/A
+ * @return A vector of strings, that will be inpputed for making an activity 
+ *
+ */
 std::vector<string>* SensorController::record(){
     
     // Get time at start of recording
@@ -76,7 +98,14 @@ std::vector<string>* SensorController::record(){
 }
 
 
-
+/**
+ * @brief Destructor
+ * @details Destructor
+ * @author Will Malisch
+ * @param N/A
+ * @return N/A
+ *
+ */
 SensorController::~SensorController(){
     delete receiver_instance;
     delete python_instance;

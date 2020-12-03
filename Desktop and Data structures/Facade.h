@@ -1,7 +1,7 @@
 /**
  * @brief Header file describing the facade of the program
  * @details Header file to describe the class of facade to hide the backend from user
- * @author Matthew Temniuk
+ * @author Matthew Temniuk, Will Malisch
  *
  */
  
@@ -47,8 +47,6 @@ class Facade	{
 	private:
 		static Facade * _instance;
 		std::vector<User *> users;
-		
-			
 };
  
  #endif

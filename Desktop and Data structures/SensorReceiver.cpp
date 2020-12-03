@@ -1,9 +1,7 @@
-/*
- * SensorReceiver.cpp
- *
- *	Author		   : Group 56
- *	Date		   : November 11, 2020
- *	Description    : 
+/**
+ * @brief SensorReceiver is a class that receives messages from the client/sensor 
+ * @details SensorReceiver operates as a server, using sockets to receive messages from the python client. This way users are unable to access the data or corrupt the data in the process
+ * @author Will Malisch
  *
  */
 #include "./SensorReceiver.h"
@@ -12,11 +10,13 @@ using namespace std;
 
 SensorReceiver * SensorReceiver::_instance = NULL;
 
- /*
- * Name        : instance
- * Description : Get the singleton instance of the SensorReceiver, if one does not exist already create it
- * Parameter(s): N/A
- * Return      : pointer to the instance of the SensorReceiver
+ /**
+ * @name instance
+ * @brief Method for creating singleton
+ * @details Get the singleton instance of the SensorReceiver, if one does not exist already create it
+ * @param N/A
+ * @author Will Malisch
+ * @return Pointer to the instance of the SensorReceiver
  */
 SensorReceiver * SensorReceiver::instance(){
     if(_instance == NULL){
@@ -25,32 +25,38 @@ SensorReceiver * SensorReceiver::instance(){
     return _instance;   
 }
 
- /*
- * Name        : SensorReceiver
- * Description : Get the singleton instance of the SensorReceiver, if one does not exist already create it
- * Parameter(s): N/A
- * Return      : pointer to the instance of the SensorReceiver
- * Description : 
+ /**
+ * @name        : SensorReceiver
+ * @brief Constructor
+ * @details : Get the singleton instance of the SensorReceiver, if one does not exist already create it
+ * @param N/A
+ * @return      : pointer to the instance of the SensorReceiver
+ * @details : Constructor 
 */
 SensorReceiver::SensorReceiver(){
     
 }
 
- /*
- * Name        : ~SensorReceiver
- * Description : Destroy the SensorReceiver
- * Parameter(s): N/A
- * Return      : Destroys SensorReceiver Object
-*/
+/**
+ * @brief Destructor
+ * @details Destructor
+ * @author Will Malisch
+ * @param N/A
+ * @return N/A
+ *
+ */
 SensorReceiver::~SensorReceiver(){
     /* Destroy data and memory allocated for acceleromter for this instance of the sensor */
 }
 
- /*
- * Name        : sensor_initialize
- * Description : Set up server side connection with sockets
- * Parameter(s): N/A
- * Return      : integer representing error/success code
+
+/**
+ * @brief Initialize sockets for sensor communication
+ * @details Set up server sidde connection with sockets
+ * @author Will Malisch
+ * @param N/A
+ * @return integer representing success or failure
+ *
  */
 int SensorReceiver::sensor_initialize(){
     // Create a scoket
@@ -78,11 +84,13 @@ int SensorReceiver::sensor_initialize(){
     return 1;
 }
 
- /*
- * Name        : run_sensor
- * Description : Accept connection from client side of application
- * Parameter(s): N/A
- * Return      : integer representing client_socket
+/**
+ * @brief Activate connection with client
+ * @details Wait for connection from python sensor client. When received, retrieve data until the user prompts to stop. Close socket when done.
+ * @author Will Malisch
+ * @param N/A
+ * @return Integer representing success or failure
+ *
  */
 int SensorReceiver::run_sensor(){
     // Use the variables below to convert messages into doubles, once you enter the receiving while loop
@@ -149,6 +157,14 @@ int SensorReceiver::run_sensor(){
     return client_socket;
 }
 
+/**
+ * @brief Calculate steps
+ * @details Iterate through vector of y coordinates and calculate steps
+ * @author Will Malisch
+ * @param N/A
+ * @return Step count
+ *
+ */
 void SensorReceiver::calculateSteps(){
     steps = 0;
     for (int i = 0; i < yvector.size(); i++){
@@ -159,43 +175,50 @@ void SensorReceiver::calculateSteps(){
 
 }
 
+/**
+ * @brief Accessor method for steps
+ * @details Gets steps
+ * @author Will Malisch
+ * @param N/A
+ * @return Step count
+ *
+ */
 int SensorReceiver::getSteps(){
     return steps;
 }
 
- /*
- * Name        : end_sensor
- * Description : Sclose connection between client and server
- * Parameter(s): N/A
- * Return      : N/A
+/**
+ * @brief End the sensor
+ * @details End sensor by closing socket 
+ * @author Will Malisch
+ * @param N/A
+ * @return N/A
+ *
  */
 void SensorReceiver::end_sensor(){
     close(client_socket);
 }
 
- /*
- * Name        : getSwitch
- * Description : Gets value to determine if sensor is running
- * Parameter(s): N/A
- * Return      : integer representing on or off
+/**
+ * @brief Accessor method for switch
+ * @details Gets switch
+ * @author Will Malisch
+ * @param N/A
+ * @return Integer representing if sensor is on or off
+ *
  */
 int SensorReceiver::getSwitch() const{
     return onSwitch;
 }
 
+/**
+ * @brief Setter method for switch
+ * @details Used to indicate the sensor is on
+ * @author Will Malisch
+ * @param Integer n to set switch
+ * @return N/A
+ *
+ */
 void SensorReceiver::setSwitch(int n){
     onSwitch = n;
 }
-
-
-
-
-
- // cout << ">> ";
-// getline(std::cin, ch);
-// if(ch.empty()) break;
-// clear buffer
-
-// If they click enter, end
-// getline(cin, ch);
-// if(ch.empty()) return -1;

@@ -1,3 +1,10 @@
+/**
+ * @brief Header file for the SensorController class 
+ * @details This goes over all the functions and declartations for Sensor Controller
+ * @author Will Malisch
+ *
+ */
+
 #ifndef SENSORCONTROLLER_H
 #define SENSORCONTROLLER_H
 #define AVG_DISTANCE_PER_STEP 2.5

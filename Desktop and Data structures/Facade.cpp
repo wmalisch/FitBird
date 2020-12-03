@@ -1,7 +1,7 @@
 /**
  * @brief Facade to hide backend calls from user DesktopMain
  * @details Facade to hide backend calls from user DesktopMain and provide functionality to the options the user choses
- * @author Matthew Temniuk
+ * @author Matthew Temniuk, Will Malisch
  *
  */
  #include "Facade.h"

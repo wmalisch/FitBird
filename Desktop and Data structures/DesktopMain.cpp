@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
 	User *currentUser = NULL;
 	
 	bool quit = false;
+	bool ranOnce = false;
 	//Loop through until quit and listen for commands
 	while(!quit)	{
 		cout << ">> ";
@@ -117,7 +118,12 @@ int main(int argc, char *argv[]){
 				instance->updateAge(currentUser, arguments);
 				
 			}else if(command == "recordActivity"){
-				instance->recordActivity(currentUser, arguments);
+				if(ranOnce == true){
+					cout << "You can not record again. You can only record one a day, otherwise you will look like Fabio." << endl;
+				}else{
+					ranOnce = true;
+					instance->recordActivity(currentUser, arguments);
+				}
 
 			}else if(command == "quit")	{
 				quit = true;
