@@ -5,7 +5,7 @@ SensorController::SensorController(){
     python_instance = PythonSensor::instance();
 }
 
-void SensorController::record(){
+std::vector<string>* SensorController::record(){
     
     // Get time at start of recording
     std::time_t t = std::time(0);
@@ -58,21 +58,21 @@ void SensorController::record(){
     string type = "Walk";
     double gain = 0.00;
     double distance = AVG_DISTANCE_PER_STEP * steps;
-    std::cout << distance << std::endl;
 
     // Convert all variables to strings, add them to the activity vector, and return the vector
-    std::vector<string> activity;
-    activity.push_back("head");
-    activity.push_back(name);
-    activity.push_back(std::to_string(startHour));
-    activity.push_back(std::to_string(startMin));
-    activity.push_back(std::to_string(endHour));
-    activity.push_back(std::to_string(endMin));
-    activity.push_back(std::to_string(duration));
-    activity.push_back(std::to_string(distance));
-    activity.push_back(type);
-    activity.push_back(std::to_string(gain));
+    std::vector<string> * activity = new vector<string>;
+    activity->push_back("head");
+    activity->push_back(name);
+    activity->push_back(std::to_string(startHour));
+    activity->push_back(std::to_string(startMin));
+    activity->push_back(std::to_string(endHour));
+    activity->push_back(std::to_string(endMin));
+    activity->push_back(std::to_string(duration));
+    activity->push_back(std::to_string(distance));
+    activity->push_back(type);
+    activity->push_back(std::to_string(gain));
     std::cout << "[DONE] Closing client and server." << std::endl;
+    return activity;
 }
 
 

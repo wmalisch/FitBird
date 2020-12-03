@@ -465,12 +465,21 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
 	}
 }
 
+/**
+ * @brief Creates a workflow for recording an activity and monitoring steps
+ * @details Instantiates a controller object to do the recording, then calls the facade to 
+ * @author Will Malisch
+ * @param user: user to update data on
+ * @param arguments: A vector of strings with the arguments to change age to
+ * 
+ */
 void Facade::recordActivity(User * user, vector<string>* arguments){
 	
 	string message;
 	if(user != NULL)	{
 		SensorController * controller = new SensorController(); 
-		controller->record();
+		vector<string>* values = controller->record();
+		Facade::addActivity(user, values);
 		delete controller;
 	}else{
 		string message = "\nNot logged in\n";

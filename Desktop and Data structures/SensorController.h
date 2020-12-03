@@ -17,9 +17,7 @@ class SensorController {
     public:
         SensorController();
         ~SensorController();
-        void handler(int signum);
-        static void static_signalHandler(int signum);
-        void record();
+        std::vector<string>* record();
         void stopRecord();
     protected:
     private:

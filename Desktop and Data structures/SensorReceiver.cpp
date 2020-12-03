@@ -30,14 +30,7 @@ SensorReceiver * SensorReceiver::instance(){
  * Description : Get the singleton instance of the SensorReceiver, if one does not exist already create it
  * Parameter(s): N/A
  * Return      : pointer to the instance of the SensorReceiver
- * Description : THIS CLASS WILL IMPLEMENT MULTILE/PARALLEL PROCESSING
- *               1. First process will run c++ server code, until the user tells the fitbird to stop recording data
- *               2. Second process will initialize python interpreter and run python client code, which accesses accelerometer data and sends it to this class
- *
- *              We have already configured the python code to access accelerometer data, send it to SensorReceiver, and have SensorReceiver print it out on the screen.
- *              This can be seen in the roughCopy directory. So we are now just converting it to a class that our facade can create and access an object for
- *              Once this class is done, the facade/main program will be able to create a sensor receiver object, which will automatically record data, and convert it
- *              into an Activity object when done. 
+ * Description : 
 */
 SensorReceiver::SensorReceiver(){
     
