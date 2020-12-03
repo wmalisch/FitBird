@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 #include <typeinfo>
+#include <chrono>
+#include <ctime>
 
 // #include <stdlib.h>
 // #include <python3.7m/Python.h>
@@ -27,7 +29,8 @@ int main(){
     // string command = "python3 ";
     // command += file;
     // system(command.c_str());
-    
+    auto start = std::chrono::system_clock::now();
+    // Some computation here
     std::string test1 = "-0.001 -0.003 -1.005/";
     std::string test2 = "0.002 0.002 1.011/";
     std::string test3 = "0.000 -0.001 1.011/";
@@ -37,7 +40,7 @@ int main(){
     std::string zsd;
 
     std::stringstream curr;
-    curr << test3;
+    curr << test1;
     char x=curr.get();
     while(x!=' '){
         xsd+=x;
@@ -54,27 +57,20 @@ int main(){
         x=curr.get(); 
     }
     std::cout << xsd << std::endl;
-    std::cout << ysd << std::endl;
-    std::cout << zsd << std::endl;
-
     std::cout << "[TESTING FLOAT CONVERSION]" << std::endl;
-    std::string::size_type sz; //alias of size_t
     double xd = std::stod(xsd.c_str());
-    double yd = std::stod(ysd.c_str());
-    double zd = std::stod(zsd.c_str());
     std::cout << xd << std::endl;
-    std::cout << yd << std::endl;
-    std::cout << zd << std::endl;
-    std::cout << typeid(xd).name() << std::endl;
-    std::cout << typeid(yd).name() << std::endl;
-    std::cout << typeid(zd).name() << std::endl;
-    std::cout << typeid(xsd).name() << std::endl;
-    std::cout << typeid(ysd).name() << std::endl;
-    std::cout << typeid(zsd).name() << std::endl;
-    int p = 1;
-    std::cout << typeid(p).name() << std::endl;
+    std::vector<double> xvec;
+    xvec.push_back(xd);
+    std::cout << xvec.at(0) << std::endl;
     
-
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t t = std::time(0);   // get time now
+    std::tm* now = std::localtime(&t);
+    std::cout << (now->tm_hour) << '-' 
+         << (now->tm_min + 1) << '-'
+         << "\n";
 
     return 0;
 }

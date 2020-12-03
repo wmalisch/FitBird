@@ -157,10 +157,17 @@ int SensorReceiver::run_sensor(){
 }
 
 void SensorReceiver::calculateSteps(){
-    for ( int i = 0; i < yvector.size(); i++){
-        std::cout << yvector[i] << std::endl;
+    steps = 0;
+    for (int i = 0; i < yvector.size(); i++){
+        if(yvector.at(i) <= -0.6){
+            steps++;
+        }
     }
 
+}
+
+int SensorReceiver::getSteps(){
+    return steps;
 }
 
  /*

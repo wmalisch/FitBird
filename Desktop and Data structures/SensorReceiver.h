@@ -43,6 +43,7 @@ class SensorReceiver
         int getSwitch() const;
         void setSwitch(int n);
         void calculateSteps();
+        int getSteps();
 
     protected:
         SensorReceiver();
@@ -58,6 +59,7 @@ class SensorReceiver
         socklen_t client_size;
         char buffer[4096];
         int onSwitch;
+        int steps;
         //Activity activity;
 
 };
