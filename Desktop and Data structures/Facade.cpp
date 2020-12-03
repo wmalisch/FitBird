@@ -449,7 +449,7 @@ void Facade::updateHeight(User * user, vector<string>* arguments)	{
  * @param arguments: A vector of strings with the arguments to change age to
  * 
  */
-void Facade::updateAge(User * user, vector<string>* arguments)	{
+void Facade::updateAge(User * user)	{
 	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
@@ -467,7 +467,7 @@ void Facade::updateAge(User * user, vector<string>* arguments)	{
 
 /**
  * @brief Creates a workflow for recording an activity and monitoring steps
- * @details Instantiates a controller object to do the recording, then calls the facade to 
+ * @details Instantiates a controller object to do the recording, then calls the facade function to add the activity
  * @author Will Malisch
  * @param user: user to update data on
  * @param arguments: A vector of strings with the arguments to change age to
