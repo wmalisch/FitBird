@@ -1,3 +1,9 @@
+/**
+ * @brief Header file describing the Python Sensor
+ * @details Header file to describe the object that runs the python code, to receive messages from 
+ * @author Will Malisch
+ *
+ */
 #ifndef PYTHONSENSOR_H
 #define PYTHONSENSOR_H
 
