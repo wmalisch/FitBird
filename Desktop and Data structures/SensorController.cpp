@@ -25,8 +25,12 @@ void SensorController::record(){
     std::tm* later = std::localtime(&e);
     int endHour = now->tm_hour;
     int endMin = now->tm_min;
+
+    // Calculate steps
     receiver_instance->calculateSteps();
     int steps = receiver_instance->getSteps();
+
+    // Get the rest of the info required to make an activity
     int duration;
     if(startHour == endHour){
         duration = endMin - startMin;    
@@ -50,10 +54,24 @@ void SensorController::record(){
             duration = (startHour - endHour) * 60 + endMin - startMin;
         }
     }
+    string name = "walk";
     string type = "Walk";
     double gain = 0.00;
     double distance = AVG_DISTANCE_PER_STEP * steps;
     std::cout << distance << std::endl;
+
+    // Convert all variables to strings, add them to the activity vector, and return the vector
+    std::vector<string> activity;
+    activity.push_back("head");
+    activity.push_back(name);
+    activity.push_back(std::to_string(startHour));
+    activity.push_back(std::to_string(startMin));
+    activity.push_back(std::to_string(endHour));
+    activity.push_back(std::to_string(endMin));
+    activity.push_back(std::to_string(duration));
+    activity.push_back(std::to_string(distance));
+    activity.push_back(type);
+    activity.push_back(std::to_string(gain));
     std::cout << "[DONE] Closing client and server." << std::endl;
 }
 
