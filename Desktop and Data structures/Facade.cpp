@@ -449,7 +449,7 @@ void Facade::updateHeight(User * user, vector<string>* arguments)	{
  * @param arguments: A vector of strings with the arguments to change age to
  * 
  */
-void Facade::updateAge(User * user)	{
+void Facade::updateAge(User * user, vector<string>* arguments)	{
 	string message;
 	if(user != NULL)	{
 		if(arguments->size() == 2)	{
@@ -470,13 +470,13 @@ void Facade::updateAge(User * user)	{
  * @details Instantiates a controller object to do the recording, then calls the facade function to add the activity
  * @author Will Malisch
  * @param user: user to update data on
- * @param arguments: A vector of strings with the arguments to change age to
+ * @param arguments: A vector of strings, kept for default. As long as the word recordActivity is entered this command runs
  * 
  */
 void Facade::recordActivity(User * user, vector<string>* arguments){
 	
 	string message;
-	if(user != NULL)	{
+	if(user != NULL){
 		SensorController * controller = new SensorController(); 
 		vector<string>* values = controller->record();
 		Facade::addActivity(user, values);
