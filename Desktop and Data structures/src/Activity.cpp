@@ -4,7 +4,7 @@
  * @author Matthew Temniuk
  *
  */
-#include "Activity.h"
+#include "../headers/Activity.h"
  
 using namespace std;
 

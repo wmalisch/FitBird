@@ -4,9 +4,9 @@
  * @author Matthew Temniuk, Will Malisch
  *
  */
- #include "Facade.h"
- #define USER_SAVE_FILE "saved_users.csv"
- #define ACTIVITY_SAVE_FILE "saved_activities.csv"
+ #include "../headers/Facade.h"
+ #define USER_SAVE_FILE "./db/saved_users.csv"
+ #define ACTIVITY_SAVE_FILE "./db/saved_activities.csv"
  
  using namespace std;
 	
@@ -221,7 +221,8 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 			end.tm_min = endMin;
 			
 			//Get correct type of activity created
-			if(type == "Walk")	{
+			if(type == "Walk"){
+
 				int steps;
 				cout << "Enter steps: ";
 				cin >> steps;
@@ -281,7 +282,46 @@ void Facade::addActivity(User * user, vector<string>* arguments)	{
 				throw message;
 			}
 			
-		}else	{
+		}else if(arguments->size() == 11){
+			//get current day
+			//name startHour startMin endHour endMin duration(min) distance steps type elevationGain
+			string name = arguments->at(1);
+			int startHour = stoi(arguments->at(2));
+			int startMin = stoi(arguments->at(3));
+			int endHour = stoi(arguments->at(4));
+			int endMin = stoi(arguments->at(5));
+			int duration = stoi(arguments->at(6));
+			double distance = stod(arguments->at(7));
+			string type = arguments->at(8);
+			double elevationGain = stod(arguments->at(9));
+			int steps = stoi(arguments->at(10));
+
+			tm  * date;
+			time_t currTime;
+			
+			time(&currTime);
+			date = localtime(&currTime);
+			
+			tm start;
+			start.tm_hour = startHour;
+			start.tm_min = startMin;
+			
+			tm end;
+			end.tm_hour = endHour;
+			end.tm_min = endMin;
+			
+			//Get correct type of activity created
+			if(type == "Walk")	{
+				
+				Walk * walk = new Walk(name, user, *date, start, end, duration, distance, steps, type, elevationGain);
+				
+				user->addActivity(walk);
+				
+			}else	{
+				message = "\nInvalid type\n";
+				throw message;
+			}
+		}else{
 			message = "\nIncorrect number of arguments\n";
 			throw message;
 		}

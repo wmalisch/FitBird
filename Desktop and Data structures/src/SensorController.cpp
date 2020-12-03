@@ -5,7 +5,7 @@
  *
  */
 
-#include "./SensorController.h"
+#include "../headers/SensorController.h"
 
 /**
  * @brief Constructor
@@ -93,6 +93,7 @@ std::vector<string>* SensorController::record(){
     activity->push_back(std::to_string(distance));
     activity->push_back(type);
     activity->push_back(std::to_string(gain));
+    activity->push_back(std::to_string(steps));
     std::cout << "[DONE] Closing client and server." << std::endl;
     return activity;
 }

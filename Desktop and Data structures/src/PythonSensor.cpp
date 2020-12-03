@@ -5,7 +5,7 @@
  *
  */
 
-#include "./PythonSensor.h"
+#include "../headers/PythonSensor.h"
 
 /**
  * @brief 
@@ -15,7 +15,7 @@
  * @return N/A
  *
  */
-const std::string PythonSensor::path = std::string("/media/sf_3307CS/Project/proj/'Desktop and Data structures'/client.py");
+const std::string PythonSensor::path = std::string("/media/sf_3307CS/Project/proj/'Desktop and Data structures'/py/client.py");
 const std::string PythonSensor::command = std::string("python3 ");
 
 PythonSensor * PythonSensor::_instance = NULL;

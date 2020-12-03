@@ -2,7 +2,7 @@
 #   client.py
 #
 #	Author		   : Group 56
-#	Date		   : November 11, 2020
+#	Date		   : December 2, 2020
 #	Description    : 
 #
 from socket import *

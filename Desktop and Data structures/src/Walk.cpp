@@ -4,7 +4,7 @@
  * @author Matthew Temniuk
  *
  */
-#include "Walk.h"
+#include "../headers/Walk.h"
 
 using namespace std;
 

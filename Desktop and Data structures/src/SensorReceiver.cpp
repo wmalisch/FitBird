@@ -4,7 +4,7 @@
  * @author Will Malisch
  *
  */
-#include "./SensorReceiver.h"
+#include "../headers/SensorReceiver.h"
 
 using namespace std;
 
