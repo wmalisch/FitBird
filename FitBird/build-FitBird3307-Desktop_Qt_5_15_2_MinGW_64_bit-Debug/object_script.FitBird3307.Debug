@@ -1,0 +1,17 @@
+debug/activity.o
+debug/activityhistory.o
+debug/dashboard.o
+debug/facade.o
+debug/main.o
+debug/mainmenu.o
+debug/manageactivities.o
+debug/manageprofile.o
+debug/signup.o
+debug/user.o
+debug/walk.o
+debug/moc_activityhistory.o
+debug/moc_dashboard.o
+debug/moc_mainmenu.o
+debug/moc_manageactivities.o
+debug/moc_manageprofile.o
+debug/moc_signup.o

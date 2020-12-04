@@ -1,0 +1,17 @@
+release/activity.o
+release/activityhistory.o
+release/dashboard.o
+release/facade.o
+release/main.o
+release/mainmenu.o
+release/manageactivities.o
+release/manageprofile.o
+release/signup.o
+release/user.o
+release/walk.o
+release/moc_activityhistory.o
+release/moc_dashboard.o
+release/moc_mainmenu.o
+release/moc_manageactivities.o
+release/moc_manageprofile.o
+release/moc_signup.o
