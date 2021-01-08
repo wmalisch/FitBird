@@ -1,4 +1,4 @@
-GROUP 56 - PROJECT PROGRESSION UPDATE
+PROJECT PROGRESSION UPDATE
 
 THis README is a quick description of the status of our project, to whom ever is marking this assignment. Please read before moving forward.
 
